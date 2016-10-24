@@ -13,16 +13,12 @@ public class ServerMaster {
 
     public static void main(String[] argv) {
         try {
-            String inputLine;
             ServerSocket serverSocket = new ServerSocket(29517);
-            Socket clientSocket = serverSocket.accept();
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            while ((inputLine = in.readLine()) != null) {
-                String outputLine = "echo: " + inputLine;
-                out.println(outputLine);
-                if (!outputLine.equals("Bye")) continue;
-                break;
+
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                ServerThread clientThread = new ServerThread(clientSocket);
+                (new Thread(clientThread)).start();
             }
         }
         catch (Throwable e) {
