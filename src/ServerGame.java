@@ -3,13 +3,13 @@ import java.util.ArrayList;
 /**
  * Created by jon on 10/25/2016.
  */
-public class ServerGame {
+public class ServerGame implements Runnable {
 
     private static final int MAX_PLAYERS = 10;
 
     private ArrayList<String> playerNames;
     private ArrayList<Integer> playerIds;
-    private ArrayList<Integer> playerPositions;
+    private int[] playerPositions;
     private int gameId;
 
     /**
@@ -56,8 +56,16 @@ public class ServerGame {
             }
         }
         if (i < playerIds.size()) {
-            playerPositions.set(i, position);
+            playerPositions[i] = position;
         }
+    }
+
+    public void run() {
+        long timeSinceLastJoin = 0;
+        while (playerIds.size() < 2 && timeSinceLastJoin < 10000) {
+            /* wait for two or more players to join */
+        }
+        /* game stuff */
     }
 
 
