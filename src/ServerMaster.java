@@ -1,10 +1,3 @@
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Reader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,7 +10,7 @@ public class ServerMaster {
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                ServerThread clientThread = new ServerThread(clientSocket);
+                ServerPlayerThread clientThread = new ServerPlayerThread(clientSocket);
                 (new Thread(clientThread)).start();
             }
         }

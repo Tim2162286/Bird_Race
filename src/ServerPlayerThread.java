@@ -6,13 +6,18 @@ import java.net.Socket;
 /**
  * Created by jon on 10/24/2016.
  */
-public class ServerThread implements Runnable {
+public class ServerPlayerThread implements Runnable {
 
-    private Socket playerSocket;
-    private int playerId;
-    private String handle;
+    private Socket playerSocket;    // The socket to which the remote player client is connected
+    private int playerId;       // The player's unique numeric identifier
+    private String handle;      // The player's nickname or handle
+    private ServerGame game;    // The game that this player is a member of
 
-    public ServerThread(Socket playerSocket) {
+    /**
+     * Creates a new ServerPlayerThread with a random playerId and the default handle
+     * @param playerSocket the Socket to which the player is connected
+     */
+    public ServerPlayerThread(Socket playerSocket) {
         this.playerSocket = playerSocket;
         this.playerId = (int)(Math.random() * Integer.MAX_VALUE);
         this.handle = "default";
@@ -29,10 +34,11 @@ public class ServerThread implements Runnable {
                 String[] command = inputLine.split("\\s+");
                 String response = null;
                 switch (command[0]) {
-                    case "status":
+                    case "status":  //Update the player's status on the server
                         response = "not_implemented";
                         break;
-                    case "setid":
+
+                    case "setid":   // Set the ID of the player, useful for reconnecting
                         try {
                             this.playerId = Integer.parseInt(command[1]);
                             response = "valid";
@@ -42,7 +48,7 @@ public class ServerThread implements Runnable {
                         }
                         break;
 
-                    case "handle":
+                    case "handle":  // Set the handle of the player
                         try {
                             this.handle = command[1];
                             response = "valid";
@@ -52,7 +58,7 @@ public class ServerThread implements Runnable {
                         }
                         break;
 
-                    case "disconnect":
+                    case "disconnect":  // Disconnect from the server
                         disconnect = true;
                         response = "closing";
                         break;
@@ -64,6 +70,8 @@ public class ServerThread implements Runnable {
                 out.println(response);
                 //System.out.println(inputLine);
             }
-        }  catch (Throwable e) {}
+        }  catch (Throwable e) {
+            System.out.println("There was an error in the ServerPlayerThread");
+        }
     }
 }
