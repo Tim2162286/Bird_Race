@@ -6,64 +6,53 @@ import java.util.ArrayList;
 public class ServerGame implements Runnable {
 
     private static final int MAX_PLAYERS = 10;
+    private static final long JOIN_TIME = 10000; // Wait this long (ms) for more people to join
 
-    private ArrayList<String> playerNames;
-    private ArrayList<Integer> playerIds;
-    private int[] playerPositions;
+    private ArrayList<ServerPlayer> players;
+    private GameState gameState;
+    private long lastJoinTime;
     private int gameId;
+    private boolean open;
 
     /**
      * Create a new game instance on the server
      */
     public ServerGame() {
-        this.gameId = (int)(Math.random()*Integer.MAX_VALUE);
-
+        this.gameId = (int)(Math.random() * Integer.MAX_VALUE);
+        this.open = true;
+        this.players = new ArrayList<ServerPlayer>(MAX_PLAYERS);
     }
 
-    public int joinGame(String playerName, int playerId) {
-        if (playerNames.size() < MAX_PLAYERS) {
-            for (String name : playerNames) {
-                if (name.equals(playerName)) {
-                    return 2;   // Player name already taken
-                }
-            }
-            for (int id : playerIds) {
-                if (id == playerId) {
-                    return 3;   // Player ID already taken
-                }
-            }
-            this.playerNames.add(playerName);
-            this.playerIds.add(playerId);
-            return 0;   // Player joined successfully
+    public boolean addPlayer(ServerPlayer player) {
+        if (this.players.size() < MAX_PLAYERS && this.open) {
+            this.players.add(player);
+            this.lastJoinTime = System.currentTimeMillis();
+            this.open = players.size() < MAX_PLAYERS;
+            return true;
         }
-        return 1;   // There were already 10 players in the game
+        return false;
     }
 
-    public String getPositions() {
-        StringBuilder positions = new StringBuilder();
-        for (int pos : playerPositions) {
-            positions.append(pos);
-            positions.append(" ");
-        }
-        return positions.toString().trim();
-    }
-
-    public synchronized void updatePosition(int playerId, int position) {
-        int i = 0;
-        for (; i < playerIds.size(); i++) {
-            if (playerIds.get(i) == playerId) {
-                break;
-            }
-        }
-        if (i < playerIds.size()) {
-            playerPositions[i] = position;
-        }
+    /**
+     * Check if the game is still accepting players
+     * @return true if game is open
+     */
+    public boolean isOpen() {
+        return this.open;
     }
 
     public void run() {
-        long timeSinceLastJoin = 0;
-        while (playerIds.size() < 2 && timeSinceLastJoin < 10000) {
-            /* wait for two or more players to join */
+        while (players.size() < 2 || (System.currentTimeMillis() - lastJoinTime) < JOIN_TIME) {
+            try {
+                Thread.sleep(500);  // Only check every half second
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
+        }
+        this.open = false;
+        this.gameState = new GameState(gameId, players.size());
+        for (ServerPlayer player : players) {
+            player.attachState(gameState);  //Attach the game state to all of the players in this game
         }
         /* game stuff */
     }
