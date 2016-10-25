@@ -11,7 +11,7 @@ public class MainMenu extends JFrame {
 
     public MainMenu(){
         Box box = Box.createVerticalBox();
-        box.add(jbtCreateGame);
+        box.add(jbtCreateGame,JFrame.CENTER_ALIGNMENT);
         box.add(jbtJoinGame);
         add(box);
     }
