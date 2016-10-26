@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Created by jon on 10/24/2016.
@@ -15,6 +17,7 @@ public class ServerPlayer implements Runnable {
     private GameState gameState;    // Current state of the game
     private int playerNum;          // Which player in the current game
     private boolean ready;          // Initial communication received from server
+    private Thread playerThread;    // Thread for this player
 
     /**
      * Creates a new ServerPlayer with a random playerId and the default handle
@@ -24,6 +27,8 @@ public class ServerPlayer implements Runnable {
         this.playerSocket = playerSocket;
         this.playerId = (int)(Math.random() * Integer.MAX_VALUE);
         this.handle = "default";
+        this.playerThread = new Thread(this);
+        this.playerThread.start();
     }
 
     public boolean attachState(GameState gameState) {
@@ -37,6 +42,10 @@ public class ServerPlayer implements Runnable {
 
     public int getPlayerNum() {
         return this.playerNum;
+    }
+
+    public boolean isConnected() {
+        return playerThread.isAlive();
     }
 
     @Override
@@ -101,8 +110,8 @@ public class ServerPlayer implements Runnable {
                 out.println(response);
                 //System.out.println(inputLine);
             }
-        }  catch (Throwable e) {
-            System.out.println("There was an error in the ServerPlayer");
+        }  catch (IOException e) {
+            System.out.println("An error has occurred: " + e);
         }
     }
 }

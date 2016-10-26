@@ -28,6 +28,8 @@ public class ServerGame implements Runnable {
             this.players.add(player);
             this.lastJoinTime = System.currentTimeMillis();
             this.open = players.size() < MAX_PLAYERS;
+            player.setPlayerNum(players.size());
+            System.out.println("New player added to game");
             return true;
         }
         return false;
@@ -45,15 +47,28 @@ public class ServerGame implements Runnable {
         while (players.size() < 2 || (System.currentTimeMillis() - lastJoinTime) < JOIN_TIME) {
             try {
                 Thread.sleep(500);  // Only check every half second
+                //System.out.println("Waiting for more players");
+
+                for (int i = 0; i < players.size(); i++) {
+                    if (!players.get(i).isConnected()) {
+                        players.remove(i);
+                        System.out.println("Player " + i + " removed");
+                        for (int j = 0; j < players.size(); j++) {
+                            players.get(j).setPlayerNum(j);
+                        }
+                    }
+                }
             } catch (InterruptedException e) {
                 System.out.println(e);
             }
         }
         this.open = false;
         this.gameState = new GameState(gameId, players.size());
-        for (ServerPlayer player : players) {
-            player.attachState(gameState);  //Attach the game state to all of the players in this game
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).attachState(gameState);
+            players.get(i).setPlayerNum(i);
         }
+        System.out.println("Game started");
         /* game stuff */
     }
 
