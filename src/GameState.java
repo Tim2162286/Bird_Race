@@ -6,11 +6,13 @@ public class GameState {
     private int[] playerPositions;
     private int numPlayers;
     private int gameId;
+    private String[] playerHandles;
 
     public GameState(int gameId, int numPlayers) {
         this.gameId = gameId;
         this.numPlayers = numPlayers;
         this.playerPositions = new int[this.numPlayers];
+        this.playerHandles = new String[this.numPlayers];
     }
 
     /**
@@ -21,9 +23,27 @@ public class GameState {
     public synchronized void setPosition(int playerNum, int position) {
         try {
             this.playerPositions[playerNum] = position;
-        } catch (IndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Tried to set position with invalid player number: " + e);
         }
+    }
+
+    /**
+     * Set the handle for a player player
+     * @param playerNum Index of the player name to change, should be the same as playerNum in ServerPlayer
+     * @param handle Name to use, spaces replaced with _
+     * @throws IndexOutOfBoundsException
+     */
+    public synchronized void setHandle(int playerNum, String handle) throws IndexOutOfBoundsException {
+        this.playerHandles[playerNum] = handle; // replace spaces with underscores
+    }
+
+    public String getHandles() {
+        String handles = "";
+        for (String handle : this.playerHandles) {
+            handles += handle + " ";
+        }
+        return handles.trim();
     }
 
     /**

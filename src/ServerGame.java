@@ -28,7 +28,7 @@ public class ServerGame implements Runnable {
             this.players.add(player);
             this.lastJoinTime = System.currentTimeMillis();
             this.open = players.size() < MAX_PLAYERS;
-            player.setPlayerNum(players.size());
+            player.setPlayerNum(players.size() - 1);
             System.out.println("New player added to game");
             return true;
         }

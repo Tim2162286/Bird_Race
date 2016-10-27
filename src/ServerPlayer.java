@@ -31,7 +31,6 @@ public class ServerPlayer implements Runnable {
         this.playerSocket = playerSocket;
         this.playerId = (int)(Math.random() * Integer.MAX_VALUE);
         this.handle = "default";
-        this.gameState = gameState;
         this.playerThread = new Thread(this);
         this.playerThread.start();
     }
@@ -43,6 +42,7 @@ public class ServerPlayer implements Runnable {
      */
     public boolean attachState(GameState gameState) {
         this.gameState = gameState;
+        this.gameState.setHandle(this.playerNum, this.handle);
         return true;
     }
 
@@ -117,10 +117,21 @@ public class ServerPlayer implements Runnable {
                     case "handle":  // Set the handle of the player
                         try {
                             this.handle = command[1];
+                            if (this.gameState != null) {
+                                this.gameState.setHandle(this.playerNum, this.handle);
+                            }
                             response = "valid";
                         } catch (IndexOutOfBoundsException e) {
                             System.out.println("Error at handle command " + e);
                             response = "invalid";
+                        }
+                        break;
+
+                    case "users":
+                        if (this.gameState != null) {
+                            response = this.gameState.getHandles();
+                        } else {
+                            response = "game_not_initialized";
                         }
                         break;
 
