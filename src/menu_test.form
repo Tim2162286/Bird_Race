@@ -5,10 +5,7 @@
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
-    <properties>
-      <enabled value="false"/>
-      <preferredSize width="200" height="250"/>
-    </properties>
+    <properties/>
     <border type="none"/>
     <children>
       <component id="ef6" class="javax.swing.JButton" binding="leaderboardButton" default-binding="true">
@@ -35,17 +32,15 @@
           <text value="Create Game"/>
         </properties>
       </component>
-      <component id="f3c4d" class="javax.swing.JTextField" binding="Title">
+      <component id="58772" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <editable value="false"/>
-          <font name="Bauhaus 93" size="48" style="0"/>
+          <font name="Bauhaus 93" size="72" style="0"/>
           <horizontalAlignment value="0"/>
-          <text value="BirdRace"/>
+          <horizontalTextPosition value="0"/>
+          <text value="Bird Race"/>
         </properties>
       </component>
     </children>
