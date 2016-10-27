@@ -1,12 +1,20 @@
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * The ServerMaster handles new incoming connections to the server.
+ * A new instance of ServerPlayer is created for each connection, and is passed to the current open game.
+ *
+ * @author Jonathan Bush
+ * @sincee 23 October 2016
+ */
+
 public class ServerMaster {
     private static final int PORTNUM = 29517;
 
     public static void main(String[] argv) {
         try {
-            ServerSocket serverSocket = new ServerSocket(29517);
+            ServerSocket serverSocket = new ServerSocket(PORTNUM);
             ServerGame newGame = new ServerGame();
             (new Thread(newGame)).start();
             while (true) {

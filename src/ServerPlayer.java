@@ -3,10 +3,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
 
 /**
- * Created by jon on 10/24/2016.
+ * Represents and individual player on the server side
+ * The ServerPlayer handles communication between the client and server,
+ * with one thread allocated per connection.
+ *
+ * @author Jonathan Bush
+ * @since 24 October 2016
  */
 public class ServerPlayer implements Runnable {
 
@@ -27,19 +31,33 @@ public class ServerPlayer implements Runnable {
         this.playerSocket = playerSocket;
         this.playerId = (int)(Math.random() * Integer.MAX_VALUE);
         this.handle = "default";
+        this.gameState = gameState;
         this.playerThread = new Thread(this);
         this.playerThread.start();
     }
 
+    /**
+     * Attach this player to a game state
+     * @param gameState The game state to attach
+     * @return true if the action was completed successfully
+     */
     public boolean attachState(GameState gameState) {
         this.gameState = gameState;
         return true;
     }
 
+    /**
+     * Set the number of this player
+     * @param playerNum Number of the player in the game
+     */
     public void setPlayerNum(int playerNum) {
         this.playerNum = playerNum;
     }
 
+    /**
+     * Get the number of this player
+     * @return player number
+     */
     public int getPlayerNum() {
         return this.playerNum;
     }
@@ -58,9 +76,10 @@ public class ServerPlayer implements Runnable {
             while (!disconnect && (inputLine = in.readLine()) != null) {
                 String[] command = inputLine.split("\\s+");
                 String response = null;
-                switch (command[0]) {
+                switch (command[0]) {   // Perform the action corresponding to the command issued by client
                     case "status":  //Update the player's status on the server
                         try {
+                            System.out.println("Setting status of player " + playerNum);
                             this.gameState.setPosition(this.playerNum, Integer.parseInt(command[1]));
                             response = "";
                             for (int i = 0; i < gameState.getNumPlayers(); i++) {
@@ -75,7 +94,14 @@ public class ServerPlayer implements Runnable {
 
                     case "ready":
                         this.ready = true;
-                        response = "waiting";
+                        //response = "waiting";
+                        while (this.gameState == null) {
+                            try {
+                                Thread.sleep(50);
+
+                            } catch (InterruptedException e) {}
+                        }
+                        response = "start";
                         break;
 
                     case "setid":   // Set the ID of the player, useful for reconnecting

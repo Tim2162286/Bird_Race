@@ -12,7 +12,7 @@ public class ServerGame implements Runnable {
     private GameState gameState;
     private long lastJoinTime;
     private int gameId;
-    private boolean open;
+    private boolean open;   //Whether or not the game is open to new players
 
     /**
      * Create a new game instance on the server
@@ -24,7 +24,7 @@ public class ServerGame implements Runnable {
     }
 
     public boolean addPlayer(ServerPlayer player) {
-        if (this.players.size() < MAX_PLAYERS && this.open) {
+        if (this.players.size() < MAX_PLAYERS && this.open) {  // Not full and open
             this.players.add(player);
             this.lastJoinTime = System.currentTimeMillis();
             this.open = players.size() < MAX_PLAYERS;
@@ -50,7 +50,7 @@ public class ServerGame implements Runnable {
                 //System.out.println("Waiting for more players");
 
                 for (int i = 0; i < players.size(); i++) {
-                    if (!players.get(i).isConnected()) {
+                    if (!players.get(i).isConnected()) {    // Remove any players that have disconnected
                         players.remove(i);
                         System.out.println("Player " + i + " removed");
                         for (int j = 0; j < players.size(); j++) {
@@ -70,6 +70,20 @@ public class ServerGame implements Runnable {
         }
         System.out.println("Game started");
         /* game stuff */
+        boolean connectionRemaining = true;
+        while (connectionRemaining) {   // Keep the game running until everybody has disconnected
+            try {
+                Thread.sleep(500);
+                connectionRemaining = false;
+                for (ServerPlayer player : players) {
+                    if (player.isConnected()) {
+                        connectionRemaining = true;
+                        break;
+                    }
+                }
+            } catch (InterruptedException e) {}
+        }
+        //System.out.println("game stopped");
     }
 
 

@@ -16,7 +16,7 @@ public class ClientMasterClass {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
-            String userInput, serverResponse = null;
+            String userInput, serverResponse = "";
             while ((userInput = stdin.readLine()) != null && !serverResponse.equals("closing")) {
                 out.println(userInput);
                 System.out.println(serverResponse = in.readLine());
