@@ -11,7 +11,6 @@ public class menu_test {
     private JButton joinGameButton;
     private JButton leaderboardButton;
     private JButton createGameButton;
-    private JTextField Title;
     private JPanel MainMenuView;
 
     public menu_test() {
