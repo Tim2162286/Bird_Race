@@ -1,8 +1,10 @@
+package Server;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * The ServerMaster handles new incoming connections to the server.
+ * The Server.ServerMaster handles new incoming connections to the server.
  * A new instance of ServerPlayer is created for each connection, and is passed to the current open game.
  *
  * @author Jonathan Bush
