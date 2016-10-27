@@ -1,5 +1,6 @@
 import javax.swing.*;
 
+
 public class MainMenu extends JFrame {
     private JButton jbtCreateGame = new JButton("Create Game");
     private JButton jbtJoinGame = new JButton("Join Game");
