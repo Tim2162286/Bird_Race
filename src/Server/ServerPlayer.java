@@ -94,6 +94,14 @@ public class ServerPlayer implements Runnable {
                         }
                         break;
 
+                    case "getstatus":
+                        response = "";
+                        for (int i = 0; i < gameState.getNumPlayers(); i++) {
+                            response += gameState.getPosition(i) + " ";
+                        }
+                        response = response.trim();
+                        break;
+
                     case "ready":
                         this.ready = true;
                         //response = "waiting";

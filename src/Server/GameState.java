@@ -5,16 +5,21 @@ package Server;
  */
 public class GameState {
 
+    private static final int DEFAULT_LENGTH = 100;
+
     private int[] playerPositions;
     private int numPlayers;
     private int gameId;
     private String[] playerHandles;
+
+    private int gameLength;
 
     public GameState(int gameId, int numPlayers) {
         this.gameId = gameId;
         this.numPlayers = numPlayers;
         this.playerPositions = new int[this.numPlayers];
         this.playerHandles = new String[this.numPlayers];
+        this.gameLength = DEFAULT_LENGTH;
     }
 
     /**
