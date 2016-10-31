@@ -10,7 +10,7 @@ public class Renderer extends JPanel {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void paintComponent(Graphics g){
+    public void paintComponent(Graphics g){
         super.paintComponent(g);
         BirdRace.birdrace.repaint(g);
     }
