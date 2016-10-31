@@ -39,6 +39,7 @@ public class menu_test {
         JFrame frame = new JFrame("MainMenu");
         frame.setContentPane(new menu_test().MainMenuView);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(720,1280);
         frame.pack();
         frame.setVisible(true);
     }
