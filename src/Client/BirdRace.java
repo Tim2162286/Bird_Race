@@ -11,24 +11,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JFrame;
-import javax.swing.Timer;
+import javax.swing.*;
 
-public class BirdRace implements ActionListener, KeyListener{
+public class BirdRace extends JPanel implements ActionListener, KeyListener {
     public static BirdRace birdrace;
     public final int WIDTH = 1280;
     public final int HEIGHT = 720;
-    public Renderer renderer;
+    //public Renderer renderer;
     public Circle bird;
     public int press;
     public int yMotion;
 
     public BirdRace(){
         JFrame frame = new JFrame();
-        renderer = new Renderer();
+        //renderer = new Renderer();
         Timer timer = new Timer(25,this);
 
-        frame.add(renderer);
+        //frame.add(renderer);
+        frame.add(this);
         frame.setTitle("BirdRace");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
@@ -39,19 +39,10 @@ public class BirdRace implements ActionListener, KeyListener{
         //Creates bird and sets size
         bird = new Circle(WIDTH/4-10, HEIGHT/2-10, 30);
         timer.start();
+        this.repaint();
     }
 
-    //Repaints after movements
-    public void repaint(Graphics g){
-        g.setColor(Color.cyan);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
 
-        g.setColor(Color.orange);
-        g.fillRect(0, HEIGHT - 120, WIDTH, 120);
-
-        g.setColor(Color.yellow);
-        g.fillOval((int)bird.getCenterX(), (int)bird.getCenterY(), 60, 60);
-    }
 
     public static void main(String[] args){
         birdrace = new BirdRace();
@@ -71,7 +62,8 @@ public class BirdRace implements ActionListener, KeyListener{
             yMotion += 2;
         }
         bird.setCenterY(bird.getCenterY() + yMotion);
-        renderer.repaint();
+
+        this.repaint();
     }
     @Override
     public void keyReleased(KeyEvent e){
@@ -89,5 +81,18 @@ public class BirdRace implements ActionListener, KeyListener{
     public void keyPressed(KeyEvent e)
     {
 
+    }
+
+    @Override
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        g.setColor(Color.cyan);
+        g.fillRect(0, 0, WIDTH, HEIGHT);
+
+        g.setColor(Color.orange);
+        g.fillRect(0, HEIGHT - 120, WIDTH, 120);
+
+        g.setColor(Color.yellow);
+        g.fillOval((int)bird.getCenterX(), (int)bird.getCenterY(), 60, 60);
     }
 }
