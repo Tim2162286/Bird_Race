@@ -26,7 +26,7 @@ public class BirdRace implements ActionListener, KeyListener{
     public BirdRace(){
         JFrame frame = new JFrame();
         renderer = new Renderer();
-        Timer timer = new Timer(20,this);
+        Timer timer = new Timer(25,this);
 
         frame.add(renderer);
         frame.setTitle("BirdRace");
@@ -37,13 +37,13 @@ public class BirdRace implements ActionListener, KeyListener{
         frame.setVisible(true);
 
         //Creates bird and sets size
-        bird = new Circle(WIDTH/2-10, HEIGHT/2-10, 30);
+        bird = new Circle(WIDTH/4-10, HEIGHT/2-10, 30);
         timer.start();
     }
 
     //Repaints after movements
     public void repaint(Graphics g){
-        g.setColor(Color.blue);
+        g.setColor(Color.cyan);
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
         g.setColor(Color.orange);
@@ -66,7 +66,6 @@ public class BirdRace implements ActionListener, KeyListener{
     }
     @Override
     public void actionPerformed(ActionEvent e){
-        int speed = 10;
         press++;
         if (press % 2 == 0){
             yMotion += 2;
