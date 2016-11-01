@@ -54,7 +54,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             yMotion += 2;
         }
         bird.setCenterY(bird.getCenterY() + yMotion);
-
+        if (bird.getCenterY()-1 <0) {
+            bird.setCenterY(1);
+            yMotion = 0;
+        }
+        if (bird.getCenterY()+180>HEIGHT)
+            bird.setCenterY(HEIGHT-180);
         this.repaint();
     }
     @Override
