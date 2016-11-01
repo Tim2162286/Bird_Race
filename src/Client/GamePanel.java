@@ -17,13 +17,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
-    public final int WIDTH = 1280;
-    public final int HEIGHT = 720;
+    private final int WIDTH = 1280;
+    private final int HEIGHT = 720;
     //public Renderer renderer;
-    public Circle bird;
+    private Circle bird;
     public int press;
-    public int yMotion;
+    //public int yMotion;
 
+    private double yVel;
+    private double yPos;
+
+    private static final double yAccel = 400;
     private static final int UPDATE_DELAY = 25;
 
     public GamePanel(){
@@ -37,29 +41,39 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.addKeyListener(this);
         timer.start();
         this.repaint();
+        this.yVel = -10;
+        this.yPos = 100;
     }
 
 
     //Moves bird in y direction when spacebar is pressed
-    public void flap(){
-        if (yMotion > 0){
+    private void flap(){
+        /*if (yMotion > 0){
             yMotion = 0;
         }
-        yMotion = yMotion - 10;
+        yMotion = yMotion - 10;*/
+        yVel -= 300;
     }
     @Override
     public void actionPerformed(ActionEvent e){
-        press++;
+        /*press++;
         if (press % 2 == 0){
             yMotion += 2;
+        }*/
+        yPos += yVel * ((double) UPDATE_DELAY / 1000.);
+        yVel += yAccel * ((double) UPDATE_DELAY / 1000.);
+        bird.setCenterY(yPos);
+        if (bird.getCenterY() <= 0) {
+            //bird.setCenterY(1);
+            yPos = 1;
+            yVel = 0;
+            System.out.println(yPos);
+        } else if (bird.getCenterY()+180>HEIGHT) {
+            bird.setCenterY(HEIGHT - 180);
+            yVel = 0;
+        } else {
+
         }
-        bird.setCenterY(bird.getCenterY() + yMotion);
-        if (bird.getCenterY()-1 <0) {
-            bird.setCenterY(1);
-            yMotion = 0;
-        }
-        if (bird.getCenterY()+180>HEIGHT)
-            bird.setCenterY(HEIGHT-180);
         this.repaint();
     }
     @Override

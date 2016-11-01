@@ -3,18 +3,14 @@ package Client;
 /**
  * Created by Celso on 10/30/2016.
  */
-import java.awt.*;
 
-import javafx.scene.shape.Circle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 public class BirdRace {
     public static GamePanel birdracepanel;
-    public final int WIDTH = 1280;
+    public final int WIDTH = 1280;  // 16:9 aspect ratio
     public final int HEIGHT = 720;
     //public Renderer renderer
 
@@ -27,10 +23,16 @@ public class BirdRace {
         frame.setTitle("BirdRace");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setVisible(true);
         frame.addKeyListener(birdracepanel);
-        //Creates bird and sets size
+
+        /*frame.addComponentListener(new ComponentListener() {
+            public void componentResized(ComponentEvent e) {
+
+            }
+        });*/
+
     }
 
 
@@ -38,4 +40,5 @@ public class BirdRace {
     public static void main(String[] args){
         new BirdRace();
     }
+
 }
