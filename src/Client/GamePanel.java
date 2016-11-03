@@ -15,12 +15,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.Object;
+import java.awt.geom.RectangularShape;
+import java.awt.geom.Ellipse2D;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     //public Renderer renderer;
-    private Circle bird;
+    private Ellipse2D bird;
     public int press;
     //public int yMotion;
 
@@ -34,7 +37,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         Timer timer = new Timer(UPDATE_DELAY, this);
 
         //Creates bird and sets size
-        bird = new Circle(WIDTH/4-10, HEIGHT/2-10, 30);
+        bird = new Ellipse2D.Double(WIDTH/4-10, HEIGHT/2-10, 30, 30);
         //this.addKeyListener(this);
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -62,14 +65,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         }*/
         yPos += yVel * ((double) UPDATE_DELAY / 1000.);
         yVel += yAccel * ((double) UPDATE_DELAY / 1000.);
-        bird.setCenterY(yPos);
+        bird = new Ellipse2D.Double((double)WIDTH/4-10, (double)yPos, 30.0, 30.0);
         if (bird.getCenterY() <= 0) {
             //bird.setCenterY(1);
             yPos = 1;
             yVel = 0;
             System.out.println(yPos);
         } else if (bird.getCenterY()+180>HEIGHT) {
-            bird.setCenterY(HEIGHT - 180);
+            bird = new Ellipse2D.Double((double)WIDTH/4-10, (double)HEIGHT-180, 30.0, 30.0);
             yVel = 0;
         } else {
 
