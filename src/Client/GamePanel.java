@@ -65,14 +65,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         }*/
         yPos += yVel * ((double) UPDATE_DELAY / 1000.);
         yVel += yAccel * ((double) UPDATE_DELAY / 1000.);
-        bird = new Ellipse2D.Double((double)WIDTH/4-10, (double)yPos, 30.0, 30.0);
+        bird = new Ellipse2D.Double(WIDTH/4-10, (double)yPos, 30.0, 30.0);
         if (bird.getCenterY() <= 0) {
             //bird.setCenterY(1);
             yPos = 1;
             yVel = 0;
             System.out.println(yPos);
         } else if (bird.getCenterY()+180>HEIGHT) {
-            bird = new Ellipse2D.Double((double)WIDTH/4-10, (double)HEIGHT-180, 30.0, 30.0);
+            bird = new Ellipse2D.Double(WIDTH/4-10, HEIGHT-195, 30.0, 30.0);
             yVel = 0;
         } else {
 
