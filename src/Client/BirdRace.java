@@ -5,12 +5,14 @@ package Client;
  */
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 
 public class BirdRace {
     public static GamePanel birdracepanel;
     public final int WIDTH = 1280;  // 16:9 aspect ratio
     public final int HEIGHT = 720;
+    public ArrayList<ObstacleMasterClass> obstacleList;
     //public Renderer renderer
 
     private static final int UPDATE_DELAY = 25;     // Time between updates in ms
