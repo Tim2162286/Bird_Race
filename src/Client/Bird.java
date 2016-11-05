@@ -39,10 +39,12 @@ public class Bird {
             yPos = 1;
             yVel = 0;
             crashed = true;
+
         } else if (yPos+BIRD_DIAMETER> HEIGHT-BOTTOM_HEIGHT) {
             yPos = HEIGHT-BOTTOM_HEIGHT-BIRD_DIAMETER;
             yVel = 0;
             crashed = true;
+
         } else {
 
         }
@@ -53,8 +55,8 @@ public class Bird {
         return bird;
     }
 
+    //If bird has crashed then there is a slight pause before restarting
     public void pause() {
-        crashed = true;
         long current = System.currentTimeMillis();
         while(System.currentTimeMillis() < current + 3000){
 
@@ -63,6 +65,7 @@ public class Bird {
         yPos = 240;
     }
 
+    //Returns True if bird has crashed with obstacle, ceiling, or floor
     public boolean crashed(){
         return crashed;
     }
