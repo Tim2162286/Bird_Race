@@ -38,11 +38,11 @@ public class Bird {
         if (yPos <= 0) {
             yPos = 1;
             yVel = 0;
-            pause();
+            crashed = true;
         } else if (yPos+BIRD_DIAMETER> HEIGHT-BOTTOM_HEIGHT) {
             yPos = HEIGHT-BOTTOM_HEIGHT-BIRD_DIAMETER;
             yVel = 0;
-            pause();
+            crashed = true;
         } else {
 
         }
