@@ -5,8 +5,7 @@ package Client;
  */
 
 import javax.swing.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+
 
 public class BirdRace {
     public static GamePanel birdracepanel;
@@ -23,15 +22,9 @@ public class BirdRace {
         frame.setTitle("BirdRace");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setVisible(true);
         frame.addKeyListener(birdracepanel);
-
-        /*frame.addComponentListener(new ComponentListener() {
-            public void componentResized(ComponentEvent e) {
-
-            }
-        });*/
 
     }
 

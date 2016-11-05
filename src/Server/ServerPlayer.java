@@ -145,6 +145,13 @@ public class ServerPlayer implements Runnable {
                         }
                         break;
 
+                    case "finished":
+                        try {
+                            int score = Integer.parseInt(command[1]);
+                        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                            System.out.println("\"finished\" command called impproperly");
+                        }
+
                     case "disconnect":  // Disconnect from the server
                         disconnect = true;
                         response = "closing";
