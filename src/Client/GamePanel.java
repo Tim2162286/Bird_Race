@@ -40,10 +40,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e){
         bird.update();
         this.repaint();
+        if(bird.crashed()){
+            bird.pause();
+        }
     }
+
     @Override
     public void keyReleased(KeyEvent e){
-        if (e.getKeyCode() == KeyEvent.VK_SPACE)
+        if(e.getKeyCode() == KeyEvent.VK_SPACE && (!bird.crashed()))
         {
             bird.flap();
         }
@@ -65,8 +69,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.cyan);
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
-        g.setColor(Color.orange);
+        g.setColor(Color.black);
         g.fillRect(0, HEIGHT - BOTTOM_HEIGHT, WIDTH, BOTTOM_HEIGHT);
+
+        g.setColor(Color.orange);
+        g.fillRect(0, HEIGHT - BOTTOM_HEIGHT + 5, WIDTH, BOTTOM_HEIGHT);
 
         g.setColor(Color.yellow);
         Graphics2D g2 = (Graphics2D)g;
