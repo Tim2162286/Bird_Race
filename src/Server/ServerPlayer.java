@@ -24,6 +24,7 @@ public class ServerPlayer implements Runnable {
     private int playerNum;          // Which player in the current game
     private boolean ready;          // Initial communication received from server
     private Thread playerThread;    // Thread for this player
+    private long finishTime;        // Score for this player
 
     /**
      * Creates a new ServerPlayer with a random playerId and the default handle
@@ -35,6 +36,7 @@ public class ServerPlayer implements Runnable {
         this.handle = "default";
         this.playerThread = new Thread(this);
         this.playerThread.start();
+        this.finishTime = -1;
     }
 
     /**
@@ -68,16 +70,20 @@ public class ServerPlayer implements Runnable {
         return playerThread.isAlive();
     }
 
+    public long getTime() {
+        return this.finishTime;
+    }
+
     @Override
     public void run() {
         try {
             PrintWriter out = new PrintWriter(playerSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
-            String inputLine, outputLine;
+            String inputLine, response;
             boolean disconnect = false;
             while (!disconnect && (inputLine = in.readLine()) != null) {
                 String[] command = inputLine.split("\\s+");
-                String response = null;
+                response = "error";
                 switch (command[0]) {   // Perform the action corresponding to the command issued by client
                     case "status":  //Update the player's status on the server
                         try {
@@ -147,10 +153,15 @@ public class ServerPlayer implements Runnable {
 
                     case "finished":
                         try {
-                            int score = Integer.parseInt(command[1]);
+                            this.finishTime = Long.parseLong(command[1]);
                         } catch (NumberFormatException | IndexOutOfBoundsException e) {
-                            System.out.println("\"finished\" command called impproperly");
+                            System.out.println("\"finished\" command called improperly");
                         }
+                        break;
+
+                    case "gameid":
+                        response = Integer.toString(gameState.getGameId());
+                        break;
 
                     case "disconnect":  // Disconnect from the server
                         disconnect = true;
@@ -162,7 +173,6 @@ public class ServerPlayer implements Runnable {
 
                 }
                 out.println(response);
-                //System.out.println(inputLine);
             }
         }  catch (IOException e) {
             System.out.println("An error has occurred: " + e);

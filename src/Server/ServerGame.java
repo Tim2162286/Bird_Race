@@ -15,6 +15,7 @@ public class ServerGame implements Runnable {
     private long lastJoinTime;
     private int gameId;
     private boolean open;   //Whether or not the game is open to new players
+    private static long MAX_TIME_PER_OBSTACLE = 30000;  //max time per obstacle in ms
 
     /**
      * Create a new game instance on the server
@@ -72,6 +73,15 @@ public class ServerGame implements Runnable {
         }
         System.out.println("Game started");
         /* game stuff */
+        boolean oneFinished = false;
+        while (!oneFinished) {
+            for (ServerPlayer player : players) {
+                if (-1 != player.getTime()) {
+                    oneFinished = true;
+                }
+            }
+        }
+
         boolean connectionRemaining = true;
         while (connectionRemaining) {   // Keep the game running until everybody has disconnected
             try {
