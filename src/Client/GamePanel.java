@@ -13,14 +13,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.Ellipse2D;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 25;
     private static final int BOTTOM_HEIGHT = 120;
-    private Bird bird = new Bird(WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY);
+    private Bird bird;
     public int press;
 
 
@@ -32,17 +31,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.requestFocusInWindow();
         this.addKeyListener(this);
         timer.start();
+        bird = new Bird(WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY);
         this.repaint();
-
+        (new Thread(bird)).start();
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        bird.update();
+        /*synchronized (this) {
+            if (!bird.update()) {
+                this.repaint();
+                bird.pause();
+            } else {
+                this.repaint();
+            }
+        }*/
         this.repaint();
-        if(bird.crashed()){
-            bird.pause();
-        }
     }
 
     @Override
@@ -78,6 +82,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.yellow);
         Graphics2D g2 = (Graphics2D)g;
         g2.fill(bird.getShape());
-        //g.fillOval(WIDTH/4-10, (int)bird.getYPos(), 60, 60);
+        System.out.println(bird.getShape().getBounds().getY());
+
     }
 }
