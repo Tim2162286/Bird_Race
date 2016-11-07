@@ -8,8 +8,9 @@ import java.util.Random;
  */
 public abstract class ObstacleMasterClass {
     protected Graphics2D g2;
+    private static double lastXPos = 0;
     protected int width;
-    protected int xPos;
+    protected double xPos;
     protected int topHeight;
     protected int bottomHeight;
     protected int openingHeight;
@@ -17,13 +18,11 @@ public abstract class ObstacleMasterClass {
     protected int HEIGHT;
     protected int BOTTOM_HEIGHT;
     protected int UPDATE_DELAY;
-    protected int lastXPos;
     protected final int xVel = 100;
 
     public boolean remove(){return (xPos+width)<0;}
 
-    public ObstacleMasterClass(Random random, int windowHeight, int bottomHeight, int updateDelay, int farthest){
-        lastXPos = farthest;
+    public ObstacleMasterClass(Random random, int windowHeight, int bottomHeight, int updateDelay){
         HEIGHT = windowHeight;
         BOTTOM_HEIGHT = bottomHeight;
         UPDATE_DELAY = updateDelay;
@@ -39,9 +38,10 @@ public abstract class ObstacleMasterClass {
     }
 
     public void paint(Graphics2D graphics){}
-    public void update(){
+    public void update(int numObstacles){
         xPos -=((double)UPDATE_DELAY/1000)*xVel;
+        lastXPos -=(((double)UPDATE_DELAY/1000)*xVel)/numObstacles;
     }
-    public int getFarthest(){return lastXPos;}
+    public int getWidth(){return width;}
 
 }
