@@ -8,6 +8,7 @@ public class GameState {
     private static final int DEFAULT_LENGTH = 100;
 
     private int[] playerPositions;
+    private long[] finishTimes;
     private int numPlayers;
     private int gameId;
     private String[] playerHandles;
@@ -32,6 +33,14 @@ public class GameState {
             this.playerPositions[playerNum] = position;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Tried to set position with invalid player number: " + e);
+        }
+    }
+
+    public synchronized  void setFinishTime(int playerNum, long time) {
+        try {
+            this.finishTimes[playerNum] = time;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Tried to set the time with invalid player number");
         }
     }
 
@@ -63,6 +72,15 @@ public class GameState {
             return this.playerPositions[playerNum];
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Tried to get position with invalid player number: " + e);
+            return -1;
+        }
+    }
+
+    public long getTime(int playerNum) {
+        try {
+            return this.finishTimes[playerNum];
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Tried to get time with invalid player number.");
             return -1;
         }
     }

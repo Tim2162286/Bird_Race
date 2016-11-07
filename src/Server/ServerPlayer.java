@@ -70,6 +70,10 @@ public class ServerPlayer implements Runnable {
         return playerThread.isAlive();
     }
 
+    /**
+     * Gets the time in milliseconds that it took the player to finish
+     * @return time in milliseconds, -1 if not finished
+     */
     public long getTime() {
         return this.finishTime;
     }
@@ -104,6 +108,14 @@ public class ServerPlayer implements Runnable {
                         response = "";
                         for (int i = 0; i < gameState.getNumPlayers(); i++) {
                             response += gameState.getPosition(i) + " ";
+                        }
+                        response = response.trim();
+                        break;
+
+                    case "getscores":
+                        response = "";
+                        for (int i = 0; i < gameState.getNumPlayers(); i++) {
+                            response += gameState.getTime(i) + " ";
                         }
                         response = response.trim();
                         break;
