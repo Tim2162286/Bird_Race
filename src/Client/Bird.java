@@ -2,14 +2,20 @@ package Client;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Tim on 11/4/2016.
  */
 public class Bird implements Runnable {
     private Ellipse2D bird;
+    private Random rand;
+    private ArrayList<ObstacleMasterClass> obstacleList;
     private double yVel;
     private double yPos;
+    private int lastXPos = 0;
+    private ObstacleMasterClass tempObstacle;
     private static final double yAccel = 400;
     private static final int birdDiameter = 60;
     private static int updateDelay;
@@ -18,22 +24,43 @@ public class Bird implements Runnable {
     private int height;
     private int bottomHeight;
     private boolean crashed = false;
+    private double time = 0;
 
-    public Bird(int width, int height, int bottomHeight, int updateDelay){
+    public Bird(Random rand, int width, int height, int bottomHeight, int updateDelay){
         this.width = width;
         this.height = height;
         this.bottomHeight = bottomHeight;
         yPos = this.height /2;
         Bird.updateDelay = updateDelay;
         bird = new Ellipse2D.Double(birdDiameter, birdDiameter, this.width /4-10,yPos);
+        obstacleList = new ArrayList<ObstacleMasterClass>(4);
+        for (int i=0;i<4;i++){
+            tempObstacle = new SquareObstacle(rand,height,bottomHeight,updateDelay, lastXPos);
+            obstacleList.add(tempObstacle);
+            lastXPos = tempObstacle.getFarthest();
+        }
     }
 
     public void flap(){yVel -= 300;}
 
     public boolean update(){
         //crashed = false;
+        boolean remove = false;
         yPos += yVel * ((double) updateDelay / 1000.);
         yVel += yAccel * ((double) updateDelay / 1000.);
+        time ++;
+        lastXPos -= (updateDelay/1000)*100;
+        for (ObstacleMasterClass i:obstacleList){
+            i.update();
+            if (i.remove())
+                remove = true;
+        }
+        if (remove){
+            obstacleList.remove(0);
+            tempObstacle = new SquareObstacle(rand,height,bottomHeight,updateDelay,lastXPos);
+            obstacleList.add(tempObstacle);
+            lastXPos = tempObstacle.getFarthest();
+        }
         synchronized (this) {
             if (yPos < 0) {
                 yPos = 0;
@@ -53,8 +80,12 @@ public class Bird implements Runnable {
         }
     }
 
-    public Shape getShape(){
-        return bird;
+    public void paint(Graphics2D graphics){
+        for (ObstacleMasterClass i:obstacleList){
+            i.paint(graphics);
+        }
+        graphics.setColor((Color.red));
+        graphics.fill(bird);
     }
 
     //If bird has crashed then there is a slight pause before restarting

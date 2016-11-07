@@ -22,7 +22,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private static final int UPDATE_DELAY = 25;
     private static final int BOTTOM_HEIGHT = 120;
     private Bird bird;
-    private ObstacleMasterClass obstacle;
     public int press;
 
 
@@ -34,8 +33,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.requestFocusInWindow();
         this.addKeyListener(this);
         timer.start();
-        bird = new Bird(WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY);
-        obstacle = new SquareObstacle(rand,HEIGHT,BOTTOM_HEIGHT,UPDATE_DELAY);
+        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY);
         this.repaint();
         (new Thread(bird)).start();
     }
@@ -85,10 +83,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         g.setColor(Color.yellow);
         Graphics2D g2 = (Graphics2D)g;
-        obstacle.paint(g2);
-        g2.fill(bird.getShape());
-
-        System.out.println(bird.getShape().getBounds().getY());
+        bird.paint(g2);
 
         g.setColor(Color.white);
         g.setFont(new Font("Arial", 1, 80));
