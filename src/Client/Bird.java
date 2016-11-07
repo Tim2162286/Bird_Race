@@ -89,8 +89,9 @@ public class Bird implements Runnable {
                 Thread.sleep(50);
             } catch (InterruptedException e) { }
         }
-        yVel = 0;
-        yPos = 240;
+        yVel = -yAccel*((double)updateDelay/1000);
+        if (yPos<=0 || yPos>=height-bottomHeight-birdDiameter)
+            yPos = 240;
     }
 
     //Returns True if bird has crashed with obstacle, ceiling, or floor
@@ -102,6 +103,9 @@ public class Bird implements Runnable {
         while(!false) {
             if(!this.update() || obstacleList.get(0).isCollided(bird)) {
                 crashed = true;
+                for (ObstacleMasterClass i:obstacleList){
+                    i.reset();
+                }
                 this.pause();
                 crashed = false;
             }

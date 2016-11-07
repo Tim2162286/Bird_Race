@@ -19,6 +19,7 @@ public abstract class ObstacleMasterClass {
     protected int BOTTOM_HEIGHT;
     protected int UPDATE_DELAY;
     protected final int xVel = 200;
+    private int backup = 150;
 
     public boolean remove(){return (xPos+width)<0;}
 
@@ -26,7 +27,7 @@ public abstract class ObstacleMasterClass {
         HEIGHT = windowHeight;
         BOTTOM_HEIGHT = bottomHeight;
         UPDATE_DELAY = updateDelay;
-        lastXPos += random.nextInt(100)+150;
+        lastXPos += random.nextInt(125)+200;
         xPos = lastXPos;
         width = random.nextInt(200)+100;
         lastXPos += width;
@@ -45,5 +46,10 @@ public abstract class ObstacleMasterClass {
     public int getWidth(){return width;}
 
     public abstract boolean isCollided(Shape bird);
+
+    public void reset(){
+        xPos += backup;
+        lastXPos += backup;
+    }
 
 }
