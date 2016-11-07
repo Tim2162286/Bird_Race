@@ -13,6 +13,7 @@ public class Bird implements Runnable {
     private static final double yAccel = 400;
     private static final int birdDiameter = 60;
     private static int updateDelay;
+    private static final int xPos = 60;
     private int width;
     private int height;
     private int bottomHeight;
@@ -37,16 +38,16 @@ public class Bird implements Runnable {
             if (yPos < 0) {
                 yPos = 0;
                 yVel = 0;
-                bird.setFrame(width / 4 - 10, yPos, birdDiameter, birdDiameter);
+                bird.setFrame(xPos, yPos, birdDiameter, birdDiameter);
                 return false;
             } else if (yPos > height - bottomHeight - birdDiameter) {
                 yPos = height - bottomHeight - birdDiameter;
                 yVel = 0;
                 System.out.println("hit at " + yPos);
-                bird.setFrame(width / 4 - 10, yPos, birdDiameter, birdDiameter);
+                bird.setFrame(xPos, yPos, birdDiameter, birdDiameter);
                 return false;
             } else {
-                bird.setFrame(width / 4 - 10, yPos, birdDiameter, birdDiameter);
+                bird.setFrame(xPos, yPos, birdDiameter, birdDiameter);
                 return true;
             }
         }
@@ -58,7 +59,7 @@ public class Bird implements Runnable {
 
     //If bird has crashed then there is a slight pause before restarting
     public synchronized void pause() {
-        bird.setFrame(width /4-10, yPos, birdDiameter, birdDiameter);
+        bird.setFrame(xPos, yPos, birdDiameter, birdDiameter);
         long current = System.currentTimeMillis();
         while(System.currentTimeMillis() < current + 3000){
             try {

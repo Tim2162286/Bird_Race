@@ -13,13 +13,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
+    private final Random rand = new Random(System.currentTimeMillis());
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 25;
     private static final int BOTTOM_HEIGHT = 120;
     private Bird bird;
+    private ObstacleMasterClass obstacle;
     public int press;
 
 
@@ -32,6 +35,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.addKeyListener(this);
         timer.start();
         bird = new Bird(WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY);
+        obstacle = new SquareObstacle(rand,HEIGHT,BOTTOM_HEIGHT,UPDATE_DELAY);
         this.repaint();
         (new Thread(bird)).start();
     }
@@ -81,7 +85,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         g.setColor(Color.yellow);
         Graphics2D g2 = (Graphics2D)g;
+        obstacle.paint(g2);
         g2.fill(bird.getShape());
+
         System.out.println(bird.getShape().getBounds().getY());
 
     }
