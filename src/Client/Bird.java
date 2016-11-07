@@ -100,7 +100,7 @@ public class Bird implements Runnable {
 
     public void run() {
         while(!false) {
-            if(!this.update()) {
+            if(!this.update() || obstacleList.get(0).isCollided(bird)) {
                 crashed = true;
                 this.pause();
                 crashed = false;

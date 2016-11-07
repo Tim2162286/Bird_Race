@@ -1,6 +1,7 @@
 package Client;
 
 import java.awt.*;
+import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.util.Random;
 
@@ -29,5 +30,13 @@ public class SquareObstacle extends ObstacleMasterClass {
     }
     public boolean remove(){
         return super.remove();
+    }
+
+    public boolean isCollided(Shape bird) {
+        Area areaA = new Area(bird);
+        areaA.intersect(new Area(topShape));
+        Area areaB = new Area(bird);
+        areaB.intersect(new Area(bottomShape));
+        return !(areaB.isEmpty() && areaA.isEmpty());
     }
 }

@@ -16,7 +16,7 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
-    private final Random rand = new Random(System.currentTimeMillis());
+    private final Random rand = new Random(1111);
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 25;

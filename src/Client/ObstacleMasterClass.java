@@ -18,7 +18,7 @@ public abstract class ObstacleMasterClass {
     protected int HEIGHT;
     protected int BOTTOM_HEIGHT;
     protected int UPDATE_DELAY;
-    protected final int xVel = 100;
+    protected final int xVel = 200;
 
     public boolean remove(){return (xPos+width)<0;}
 
@@ -43,5 +43,7 @@ public abstract class ObstacleMasterClass {
         lastXPos -=(((double)UPDATE_DELAY/1000)*xVel)/numObstacles;
     }
     public int getWidth(){return width;}
+
+    public abstract boolean isCollided(Shape bird);
 
 }
