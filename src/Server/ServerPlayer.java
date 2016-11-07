@@ -166,6 +166,7 @@ public class ServerPlayer implements Runnable {
                     case "finished":
                         try {
                             this.finishTime = Long.parseLong(command[1]);
+                            this.gameState.setFinishTime(this.playerNum, this.finishTime);
                         } catch (NumberFormatException | IndexOutOfBoundsException e) {
                             System.out.println("\"finished\" command called improperly");
                         }
