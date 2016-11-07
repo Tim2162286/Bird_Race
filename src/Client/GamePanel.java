@@ -90,5 +90,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         System.out.println(bird.getShape().getBounds().getY());
 
+        g.setColor(Color.white);
+        g.setFont(new Font("Arial", 1, 80));
+        if(bird.crashed()){
+            g.drawString("Respawning In 3 Sec...", 200, HEIGHT / 2 - 50);
+        }
+
     }
 }

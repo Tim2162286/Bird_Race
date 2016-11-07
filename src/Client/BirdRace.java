@@ -15,7 +15,7 @@ public class BirdRace {
     public ArrayList<ObstacleMasterClass> obstacleList;
     //public Renderer renderer
 
-    private static final int UPDATE_DELAY = 25;     // Time between updates in ms
+    private static final int UPDATE_DELAY = 40;     // Time between updates in ms
 
     public BirdRace(){
         JFrame frame = new JFrame();
