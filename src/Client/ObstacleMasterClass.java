@@ -49,7 +49,7 @@ public abstract class ObstacleMasterClass {
 
     public void reset(){
         xPos += backup;
-        lastXPos += backup;
+        lastXPos += backup/4;
     }
 
 }
