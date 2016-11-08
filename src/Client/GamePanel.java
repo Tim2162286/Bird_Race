@@ -2,6 +2,7 @@ package Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -19,14 +20,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private final Random rand = new Random(1111);
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
-    private static final int UPDATE_DELAY = 25;
+    private static final int UPDATE_DELAY = 40;
     private static final int BOTTOM_HEIGHT = 120;
     private Bird bird;
     public int press;
 
+    private ClientMaster client;
+
 
     public GamePanel(){
         Timer timer = new Timer(UPDATE_DELAY, this);
+
 
         //this.addKeyListener(this);
         this.setFocusable(true);

@@ -122,8 +122,8 @@ public class ServerPlayer implements Runnable {
 
                     case "ready":
                         this.ready = true;
-                        //response = "waiting";
                         while (this.gameState == null) {
+                            System.out.println("Game state is: " + gameState);
                             try {
                                 Thread.sleep(50);
 

@@ -19,7 +19,7 @@ public abstract class ObstacleMasterClass {
     protected int BOTTOM_HEIGHT;
     protected int UPDATE_DELAY;
     protected final int xVel = 200;
-    private int backup = 150;
+    private int backup = 400;
 
     public boolean remove(){return (xPos+width)<0;}
 

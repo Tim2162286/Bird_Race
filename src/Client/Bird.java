@@ -35,6 +35,9 @@ public class Bird implements Runnable {
         for (int i=0;i<4;i++){
             obstacleList.add(new SquareObstacle(rand,height,bottomHeight,updateDelay));
         }
+        for (ObstacleMasterClass obst : obstacleList) {
+            obst.reset();
+        }
     }
 
     public void flap(){yVel -= 300;}
