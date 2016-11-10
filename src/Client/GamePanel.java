@@ -90,6 +90,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         bird.paint(g2);
 
         g.setColor(Color.white);
+        g.setFont(new Font("Arial", 1, 20));
+        g.drawString("Leaderboard:",15, HEIGHT - BOTTOM_HEIGHT + 25);
+        g.drawString("1st: Name " + Integer.toString(bird.getScore()), 15, HEIGHT - BOTTOM_HEIGHT + 45);
+        g.drawString("2nd: Name ", 15, HEIGHT - BOTTOM_HEIGHT + 65);
+        g.drawString("3rd: Name ", 15, HEIGHT - BOTTOM_HEIGHT + 85);
+
         g.setFont(new Font("Arial", 1, 80));
         if(bird.crashed()){
             g.drawString("Respawning In 3 Sec...", 200, HEIGHT / 2 - 50);
