@@ -94,7 +94,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         if(bird.crashed()){
             g.drawString("Respawning In 3 Sec...", 200, HEIGHT / 2 - 50);
         }
-
-        g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
+        else {
+            g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
+        }
     }
 }
