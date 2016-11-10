@@ -22,6 +22,7 @@ public class Bird implements Runnable {
     private int height;
     private int bottomHeight;
     private boolean crashed = false;
+    private int score = 0;
 
     public Bird(Random rand, int width, int height, int bottomHeight, int updateDelay){
         this.rand = rand;
@@ -42,6 +43,13 @@ public class Bird implements Runnable {
 
     public void flap(){yVel -= 300;}
 
+    public void setScore(int Score){
+        score = Score;
+    }
+    public int getScore(){
+        return score;
+    }
+
     public boolean update(){
         //crashed = false;
         boolean remove = false;
@@ -53,6 +61,7 @@ public class Bird implements Runnable {
                 remove = true;
         }
         if (remove){
+            score += 1;
             obstacleList.remove(0);
             obstacleList.add(new SquareObstacle(rand,height,bottomHeight,updateDelay));
         }
@@ -97,7 +106,7 @@ public class Bird implements Runnable {
             yPos = 240;
     }
 
-    //Returns True if bird has crashed with obstacle, ceiling, or floor
+    //Returns true if bird has crashed with obstacle, ceiling, or floor
     public boolean crashed(){
         return crashed;
     }

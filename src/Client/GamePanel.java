@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.black);
         g.fillRect(0, HEIGHT - BOTTOM_HEIGHT, WIDTH, BOTTOM_HEIGHT);
 
-        g.setColor(Color.orange);
+        g.setColor(Color.orange.darker());
         g.fillRect(0, HEIGHT - BOTTOM_HEIGHT + 5, WIDTH, BOTTOM_HEIGHT);
 
         g.setColor(Color.yellow);
@@ -95,5 +95,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             g.drawString("Respawning In 3 Sec...", 200, HEIGHT / 2 - 50);
         }
 
+        g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
     }
 }
