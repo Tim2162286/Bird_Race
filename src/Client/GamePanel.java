@@ -24,13 +24,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private static final int BOTTOM_HEIGHT = 120;
     private Bird bird;
     public int press;
-
+    String playerList[][] = {{"P1","0"},{"P2","0"},{"P3","0"},{"P4","0"}};
+    String leaderList[][] = new String[3][2];
+    int time = 0;
     private ClientMaster client;
 
 
     public GamePanel(){
         Timer timer = new Timer(UPDATE_DELAY, this);
-
 
         //this.addKeyListener(this);
         this.setFocusable(true);
@@ -52,6 +53,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 this.repaint();
             }
         }*/
+        time += UPDATE_DELAY;
+        System.out.println(time);
         this.repaint();
     }
 
@@ -90,11 +93,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         bird.paint(g2);
 
         g.setColor(Color.white);
+        playerList[0][1] = Integer.toString(bird.getScore());
         g.setFont(new Font("Arial", 1, 20));
-        g.drawString("Leaderboard:",15, HEIGHT - BOTTOM_HEIGHT + 25);
-        g.drawString("1st: Name " + Integer.toString(bird.getScore()), 15, HEIGHT - BOTTOM_HEIGHT + 45);
-        g.drawString("2nd: Name ", 15, HEIGHT - BOTTOM_HEIGHT + 65);
-        g.drawString("3rd: Name ", 15, HEIGHT - BOTTOM_HEIGHT + 85);
+
+        g.drawString("Leaderboard:",15, HEIGHT - BOTTOM_HEIGHT + 20);
+        for (int i=0;i<leaderList.length && i<3;i++){
+            g.drawString(leaderList[i][0]+" "+leaderList[i][1],15,HEIGHT-BOTTOM_HEIGHT+40+(18*i));
+        }
 
         g.setFont(new Font("Arial", 1, 80));
         if(bird.crashed()){
