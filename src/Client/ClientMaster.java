@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Queue;
 
 /**
  * Created by Tim on 10/24/2016.
@@ -20,7 +19,7 @@ public class ClientMaster implements Runnable {
     private ArrayList<String> commandQueue;
 
     private String[] playerNames;
-    private int[] playerPositions;
+    private int[] obstaclesPassed;
     private int[] playerFinishTimes;
     private int gameId;
     private boolean ready;
@@ -53,19 +52,19 @@ public class ClientMaster implements Runnable {
                     String[] command = commandToSend.split("\\s+");
                     switch (command[0]) {   // Perform the action corresponding to the command issued by client
                         case "status":  //Update the player's status on the server
-                        case "getstatus":
+                        case "getstatus":   // Update local status from server
                             String[] positions = serverResponse.split("\\s");
-                            this.playerPositions = new int[positions.length];
+                            this.obstaclesPassed = new int[positions.length];
                             for (int i = 0; i < positions.length; i++) {
-                                this.playerPositions[i] = Integer.parseInt(positions[i]);
+                                this.obstaclesPassed[i] = Integer.parseInt(positions[i]);
                             }
                             break;
 
                         case "getscores":
                             String[] scores = serverResponse.split("\\s");
-                            this.playerPositions = new int[scores.length];
+                            this.playerFinishTimes = new int[scores.length];
                             for (int i = 0; i < scores.length; i++) {
-                                this.playerPositions[i] = Integer.parseInt(scores[i]);
+                                this.playerFinishTimes[i] = Integer.parseInt(scores[i]);
                             }
                             break;
 
@@ -108,28 +107,51 @@ public class ClientMaster implements Runnable {
         }
     }
 
+    /**
+     * Request Game ID from server
+     */
     public void requestGameId() {
         commandQueue.add("gameid");
     }
 
+    /**
+     * Get the ID of this game
+     * @return ID of the game, used for seeding Random
+     */
     public int getGameId() {
         return this.gameId;
     }
 
-
+    /**
+     * Set the handle of this player on the server
+     * @param handle String without whitespace. ' ' will be replaced with '_'
+     */
     public void setHandle(String handle) {
         commandQueue.add("handle " + handle.trim().replace(' ','_'));
     }
 
-
-    public void requestUsers() {
+    /**
+     * Request the list of handles from the server in order of player id
+     */
+    public void requestHandles() {
         commandQueue.add("users");
     }
 
-    public String[] getUsers() {
+    public String[] getHandles() {
         return this.playerNames;
     }
 
+    public void updateObstaclesPassed(int numObstacles) {
+        commandQueue.add("status " + numObstacles);
+    }
+
+    public void requestObstaclesPassed() {
+        commandQueue.add("getstatus");
+    }
+
+    public int[] getObstaclesPassed() {
+        return this.obstaclesPassed;
+    }
     public boolean isReady() {
         System.out.println(backlog() + " " + commandQueue.size());
         if(!backlog())
@@ -139,6 +161,14 @@ public class ClientMaster implements Runnable {
 
     public void setFinishTime(int time) {
         commandQueue.add("finished " + time);
+    }
+
+    public void requestFinishTimes() {
+        commandQueue.add("getscores");
+    }
+
+    public int[] getFinishTimes() {
+        return this.playerFinishTimes;
     }
 
     public void disconnect() {

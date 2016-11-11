@@ -123,7 +123,7 @@ public class ServerPlayer implements Runnable {
                     case "ready":
                         this.ready = true;
                         while (this.gameState == null) {
-                            System.out.println("Game state is: " + gameState);
+                            //System.out.println("Game state is: " + gameState);
                             try {
                                 Thread.sleep(50);
 

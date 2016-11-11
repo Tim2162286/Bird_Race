@@ -21,6 +21,7 @@ public class GameState {
         this.playerPositions = new int[this.numPlayers];
         this.playerHandles = new String[this.numPlayers];
         this.gameLength = DEFAULT_LENGTH;
+        this.finishTimes = new long[this.numPlayers];
     }
 
     /**
