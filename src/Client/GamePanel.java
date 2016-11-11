@@ -29,6 +29,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     int time = 0;
     private ClientMaster client;
 
+    private String[][] getLeaderList(String[][] playerList){
+        return new String[0][0];
+    }
 
     public GamePanel(){
         Timer timer = new Timer(UPDATE_DELAY, this);
