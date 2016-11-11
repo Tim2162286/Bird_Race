@@ -89,7 +89,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         Graphics2D g2 = (Graphics2D)g;
         bird.paint(g2);
 
-        g.setColor(Color.white);
+        g.setColor(Color.black);
         g.setFont(new Font("Arial", 1, 20));
         g.drawString("Leaderboard:",15, HEIGHT - BOTTOM_HEIGHT + 25);
         g.drawString("1st: Name " + Integer.toString(bird.getScore()), 15, HEIGHT - BOTTOM_HEIGHT + 45);
