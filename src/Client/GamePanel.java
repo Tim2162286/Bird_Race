@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private static final int UPDATE_DELAY = 17;
     private static final int BOTTOM_HEIGHT = 120;
     private Bird bird;
+    private String name;
     public int press;
     String playerNameList[] = {"P1","P2","P3","P4","P5","P6","P7"};
     int playerScoreList[] = {0,5,0,0,0,0,0,0,0,0,0};
@@ -59,7 +60,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.requestFocusInWindow();
         this.addKeyListener(this);
         timer.start();
-        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY, "P3");
+        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY);
         this.repaint();
         (new Thread(bird)).start();
     }
@@ -120,7 +121,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.fillRect(WIDTH/4, HEIGHT - BOTTOM_HEIGHT + 5, WIDTH/2, BOTTOM_HEIGHT);
 
         for (int i=0;i<playerNameList.length;i++) {
-            if (playerNameList[i].equals(bird.getName()))
+            if (playerNameList[i].equals(name))
                 g.setColor(Color.red);
             else
                 g.setColor(Color.black);

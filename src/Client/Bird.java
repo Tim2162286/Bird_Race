@@ -23,14 +23,12 @@ public class Bird implements Runnable {
     private int bottomHeight;
     private boolean crashed = false;
     private int score = 0;
-    private String name;
 
-    public Bird(Random rand, int width, int height, int bottomHeight, int updateDelay, String name){
+    public Bird(Random rand, int width, int height, int bottomHeight, int updateDelay){
         this.rand = rand;
         this.width = width;
         this.height = height;
         this.bottomHeight = bottomHeight;
-        this.name = name;
         yPos = this.height/2;
         Bird.updateDelay = updateDelay;
         bird = new Ellipse2D.Double(birdDiameter, birdDiameter, this.width /4-10,yPos);
@@ -43,7 +41,6 @@ public class Bird implements Runnable {
         }
     }
 
-    public String getName(){return name;}
 
     public void flap(){yVel -= 300;}
 
