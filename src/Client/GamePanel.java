@@ -2,8 +2,7 @@ package Client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
+
 
 /**
  * Created by jon on 10/28/2016.
@@ -24,13 +23,33 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private static final int BOTTOM_HEIGHT = 120;
     private Bird bird;
     public int press;
-    String playerList[][] = {{"P1","0"},{"P2","0"},{"P3","0"},{"P4","0"}};
-    String leaderList[][] = new String[3][2];
+    String playerNameList[] = {"P1","P2","P3","P4"};
+    int playerScoreList[] = {0,5,0,0};
+    String leaderList[][] = getLeaderList(playerNameList.clone(),playerScoreList.clone());
     int time = 0;
     private ClientMaster client;
 
-    private String[][] getLeaderList(String[][] playerList){
-        return new String[0][0];
+    private String[][] getLeaderList(String[] playerNameList, int[] ScoreList){
+        int length;
+        int max;
+        if (playerNameList.length>2)
+            length = 3;
+        else
+            length = 2;
+        System.out.println(length);
+        String leaders[][] = new String[length][2];
+        for (int i=0;i<leaders.length;i++) {
+            max = 0;
+            for (int j = 0; j < playerNameList.length; j++) {
+                if (ScoreList[j]>ScoreList[max]) {
+                    max = j;
+                }
+            }
+            leaders[i][0] = playerNameList[max];
+            leaders[i][1] = Integer.toString(ScoreList[max]);
+            ScoreList[max] = -1;
+        }
+        return leaders;
     }
 
     public GamePanel(){
@@ -56,9 +75,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 this.repaint();
             }
         }*/
+        playerScoreList[0] = bird.getScore();
         time += UPDATE_DELAY;
-        System.out.println(time);
         this.repaint();
+        if (time >= 1000){
+            leaderList = getLeaderList(playerNameList.clone(),playerScoreList.clone());
+            time = 0;
+        }
     }
 
     @Override
@@ -96,9 +119,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         bird.paint(g2);
 
         g.setColor(Color.white);
-        playerList[0][1] = Integer.toString(bird.getScore());
         g.setFont(new Font("Arial", 1, 20));
-
         g.drawString("Leaderboard:",15, HEIGHT - BOTTOM_HEIGHT + 20);
         for (int i=0;i<leaderList.length && i<3;i++){
             g.drawString(leaderList[i][0]+" "+leaderList[i][1],15,HEIGHT-BOTTOM_HEIGHT+40+(18*i));
