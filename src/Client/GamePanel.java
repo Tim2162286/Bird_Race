@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private String name;
     public int press;
     String playerNameList[] = {"P1","P2","P3","P4","P5","P6","P7"};
-    int playerScoreList[] = {0,5,0,0,0,0,0,0,0,0,0};
+    int playerScoreList[] = {0,50,0,0,0,0,0,0,0,0,0};
     String leaderList[][] = getLeaderList(playerNameList.clone(),playerScoreList.clone());
     int time = 0;
     private ClientMaster client;
@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.requestFocusInWindow();
         this.addKeyListener(this);
         timer.start();
-        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY);
+        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY,OBSTACAL_COUNT);
         this.repaint();
         (new Thread(bird)).start();
     }
@@ -125,13 +125,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 g.setColor(Color.red);
             else
                 g.setColor(Color.black);
-            g.fillOval(WIDTH/4+1+playerScoreList[i]*(WIDTH/2-(WIDTH/4)+1)/OBSTACAL_COUNT,HEIGHT-BOTTOM_HEIGHT+i*11+4  , 10, 10);
+            g.fillOval(WIDTH/4+1+playerScoreList[i]*(WIDTH/2-42)/OBSTACAL_COUNT,HEIGHT-BOTTOM_HEIGHT+i*11+4  , 10, 10);
         }
 
 
         g.setColor(Color.red);
 
-        g.fillRect(3*WIDTH/4-38, HEIGHT - BOTTOM_HEIGHT + 5, 5, BOTTOM_HEIGHT + 5);
+        g.fillRect(3*WIDTH/4-37, HEIGHT - BOTTOM_HEIGHT + 5, 4, BOTTOM_HEIGHT + 5);
 
         g.setColor(Color.yellow);
         Graphics2D g2 = (Graphics2D)g;

@@ -23,12 +23,14 @@ public class Bird implements Runnable {
     private int bottomHeight;
     private boolean crashed = false;
     private int score = 0;
+    private int GAME_LENGTH;
 
-    public Bird(Random rand, int width, int height, int bottomHeight, int updateDelay){
+    public Bird(Random rand, int width, int height, int bottomHeight, int updateDelay, int maxObsticals){
         this.rand = rand;
         this.width = width;
         this.height = height;
         this.bottomHeight = bottomHeight;
+        GAME_LENGTH = maxObsticals;
         yPos = this.height/2;
         Bird.updateDelay = updateDelay;
         bird = new Ellipse2D.Double(birdDiameter, birdDiameter, this.width /4-10,yPos);
@@ -64,7 +66,10 @@ public class Bird implements Runnable {
         if (remove){
             score += 1;
             obstacleList.remove(0);
-            obstacleList.add(new SquareObstacle(rand,height,bottomHeight,updateDelay));
+            if (score+obstacleList.size()<GAME_LENGTH)
+                obstacleList.add(new SquareObstacle(rand,height,bottomHeight,updateDelay));
+            if (obstacleList.size() == 0){}
+                //End game
         }
         synchronized (this) {
             if (yPos < 0) {
