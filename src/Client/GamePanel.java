@@ -114,16 +114,29 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.orange.darker());
         g.fillRect(0, HEIGHT - BOTTOM_HEIGHT + 5, WIDTH, BOTTOM_HEIGHT);
 
+        g.setColor(Color.black);
+        g.fillRect(WIDTH/4-5, HEIGHT - BOTTOM_HEIGHT, WIDTH/2+10, BOTTOM_HEIGHT);
+
+        g.setColor(Color.white);
+        g.fillRect(WIDTH/4, HEIGHT - BOTTOM_HEIGHT + 5, WIDTH/2, BOTTOM_HEIGHT);
+
+        g.setColor(Color.red);
+        g.fillOval(WIDTH/4+1+bird.getScore()*12,HEIGHT - BOTTOM_HEIGHT + 5,10,10);
+        g.fillRect(3*WIDTH/4-38, HEIGHT - BOTTOM_HEIGHT + 5, 5, BOTTOM_HEIGHT + 5);
+
         g.setColor(Color.yellow);
         Graphics2D g2 = (Graphics2D)g;
         bird.paint(g2);
 
-        g.setColor(Color.white);
+        g.setColor(Color.black);
         g.setFont(new Font("Arial", 1, 20));
-        g.drawString("Leaderboard:",15, HEIGHT - BOTTOM_HEIGHT + 20);
+        g.drawString("LEADERBOARD:",15, HEIGHT - BOTTOM_HEIGHT + 25);
         for (int i=0;i<leaderList.length && i<3;i++){
-            g.drawString(leaderList[i][0]+" "+leaderList[i][1],15,HEIGHT-BOTTOM_HEIGHT+40+(18*i));
+            g.drawString(leaderList[i][0]+" "+leaderList[i][1],15,HEIGHT-BOTTOM_HEIGHT+45+(18*i));
         }
+        g.drawString("START",WIDTH/4-75, HEIGHT - BOTTOM_HEIGHT + 25);
+        g.drawString("FINISH",3*WIDTH/4+10, HEIGHT - BOTTOM_HEIGHT + 25);
+        g.drawString("TIME:",WIDTH-100, HEIGHT - BOTTOM_HEIGHT + 25);
 
         g.setFont(new Font("Arial", 1, 80));
         if(bird.crashed()){
