@@ -55,7 +55,9 @@ public class ServerPlayer implements Runnable {
      * @param playerNum Number of the player in the game
      */
     public void setPlayerNum(int playerNum) {
+
         this.playerNum = playerNum;
+        this.playerId = playerNum;
     }
 
     /**
@@ -140,6 +142,10 @@ public class ServerPlayer implements Runnable {
                             System.out.println("Exception at clientid command: " + e);
                             response = "invalid";
                         }
+                        break;
+
+                    case "getid":
+                        response = Integer.toString(this.playerId);
                         break;
 
                     case "handle":  // Set the handle of the player

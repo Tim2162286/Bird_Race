@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class ServerGame implements Runnable {
 
-    private static final int MAX_PLAYERS = 8;
+    private static final int MAX_PLAYERS = 7;
     private static final long JOIN_TIME = 10000; // Wait this long (ms) for more people to join
 
     private ArrayList<ServerPlayer> players;
