@@ -17,14 +17,15 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private final Random rand = new Random(1111);
+    private final int OBSTACAL_COUNT = 50;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
-    private static final int UPDATE_DELAY = 40;
+    private static final int UPDATE_DELAY = 17;
     private static final int BOTTOM_HEIGHT = 120;
     private Bird bird;
     public int press;
-    String playerNameList[] = {"P1","P2","P3","P4"};
-    int playerScoreList[] = {0,5,0,0};
+    String playerNameList[] = {"P1","P2","P3","P4","P5","P6","P7"};
+    int playerScoreList[] = {0,5,0,0,0,0,0,0,0,0,0};
     String leaderList[][] = getLeaderList(playerNameList.clone(),playerScoreList.clone());
     int time = 0;
     private ClientMaster client;
@@ -36,7 +37,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             length = 3;
         else
             length = 2;
-        System.out.println(length);
         String leaders[][] = new String[length][2];
         for (int i=0;i<leaders.length;i++) {
             max = 0;
@@ -54,13 +54,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     public GamePanel(){
         Timer timer = new Timer(UPDATE_DELAY, this);
-
         //this.addKeyListener(this);
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addKeyListener(this);
         timer.start();
-        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY);
+        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY, "P3");
         this.repaint();
         (new Thread(bird)).start();
     }
@@ -120,8 +119,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.white);
         g.fillRect(WIDTH/4, HEIGHT - BOTTOM_HEIGHT + 5, WIDTH/2, BOTTOM_HEIGHT);
 
+        for (int i=0;i<playerNameList.length;i++) {
+            if (playerNameList[i].equals(bird.getName()))
+                g.setColor(Color.red);
+            else
+                g.setColor(Color.black);
+            g.fillOval(WIDTH/4+1+playerScoreList[i]*(WIDTH/2-(WIDTH/4)+1)/OBSTACAL_COUNT,HEIGHT-BOTTOM_HEIGHT+i*11+4  , 10, 10);
+        }
+
+
         g.setColor(Color.red);
-        g.fillOval(WIDTH/4+1+bird.getScore()*12,HEIGHT - BOTTOM_HEIGHT + 5,10,10);
+
         g.fillRect(3*WIDTH/4-38, HEIGHT - BOTTOM_HEIGHT + 5, 5, BOTTOM_HEIGHT + 5);
 
         g.setColor(Color.yellow);
@@ -130,13 +138,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         g.setColor(Color.black);
         g.setFont(new Font("Arial", 1, 20));
-        g.drawString("LEADERBOARD:",15, HEIGHT - BOTTOM_HEIGHT + 25);
+        g.drawString("LEADERBOARD:",15, HEIGHT - BOTTOM_HEIGHT + 22);
         for (int i=0;i<leaderList.length && i<3;i++){
-            g.drawString(leaderList[i][0]+" "+leaderList[i][1],15,HEIGHT-BOTTOM_HEIGHT+45+(18*i));
+            g.drawString(leaderList[i][0]+" "+leaderList[i][1],15,HEIGHT-BOTTOM_HEIGHT+40+(18*i));
         }
-        g.drawString("START",WIDTH/4-75, HEIGHT - BOTTOM_HEIGHT + 25);
-        g.drawString("FINISH",3*WIDTH/4+10, HEIGHT - BOTTOM_HEIGHT + 25);
-        g.drawString("TIME:",WIDTH-100, HEIGHT - BOTTOM_HEIGHT + 25);
+        g.drawString("START",WIDTH/4-75, HEIGHT - BOTTOM_HEIGHT + 22);
+        g.drawString("FINISH",3*WIDTH/4+10, HEIGHT - BOTTOM_HEIGHT + 22);
+        g.drawString("TIME:",WIDTH-100, HEIGHT - BOTTOM_HEIGHT + 22);
 
         g.setFont(new Font("Arial", 1, 80));
         if(bird.crashed()){
