@@ -27,7 +27,7 @@ public abstract class ObstacleMasterClass {
         HEIGHT = windowHeight;
         BOTTOM_HEIGHT = bottomHeight;
         UPDATE_DELAY = updateDelay;
-        lastXPos += random.nextInt(125)+200;
+        lastXPos += random.nextInt(115)+210;
         xPos = lastXPos;
         width = random.nextInt(200)+100;
         lastXPos += width;
@@ -52,4 +52,15 @@ public abstract class ObstacleMasterClass {
         lastXPos += backup/4;
     }
 
+    public void moveObstacleBack(int px) {
+        xPos += px;
+    }
+
+    public void moveLastXPosBack(int px) {
+        lastXPos += px;
+    }
+
+    public int getXPos() {
+        return (int)xPos;
+    }
 }

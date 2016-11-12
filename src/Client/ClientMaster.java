@@ -23,6 +23,7 @@ public class ClientMaster implements Runnable {
     private int[] playerFinishTimes;
     private int gameId;
     private boolean ready;
+    private int playerId;
 
     public ClientMaster() throws IOException{
         clientSocket = new Socket(HOSTNAME, PORT);
@@ -55,7 +56,7 @@ public class ClientMaster implements Runnable {
                         case "getstatus":   // Update local status from server
                             String[] positions = serverResponse.split("\\s");
                             this.obstaclesPassed = new int[positions.length];
-                            for (int i = 0; i < positions.length; i++) {
+                            for (   int i = 0; i < positions.length; i++) {
                                 this.obstaclesPassed[i] = Integer.parseInt(positions[i]);
                             }
                             break;
@@ -74,6 +75,10 @@ public class ClientMaster implements Runnable {
 
                         case "setid":   // Set the ID of the player, useful for reconnecting
                             // no action required
+                            break;
+
+                        case "getid":
+                            this.playerId = Integer.parseInt(serverResponse);
                             break;
 
                         case "handle":  // Set the handle of the player
@@ -169,6 +174,14 @@ public class ClientMaster implements Runnable {
 
     public int[] getFinishTimes() {
         return this.playerFinishTimes;
+    }
+
+    public void requestPlayerId() {
+        commandQueue.add("getid");
+    }
+
+    public int getPlayerId() {
+        return this.playerId;
     }
 
     public void disconnect() {

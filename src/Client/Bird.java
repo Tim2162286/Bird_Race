@@ -116,9 +116,12 @@ public class Bird implements Runnable {
         while(!false) {
             if(!this.update() || obstacleList.get(0).isCollided(bird)) {
                 crashed = true;
+                int backup = 460 - obstacleList.get(0).getXPos();
                 for (ObstacleMasterClass i:obstacleList){
-                    i.reset();
+                    //i.reset();
+                    i.moveObstacleBack(backup);
                 }
+                obstacleList.get(0).moveLastXPosBack(backup);
                 this.pause();
                 crashed = false;
             }
