@@ -134,7 +134,7 @@ public class ServerPlayer implements Runnable {
                         response = "start";
                         break;
 
-                    case "setid":   // Set the ID of the player, useful for reconnecting
+                    case "setid":   // Set the ID of the player, u seful for reconnecting
                         try {
                             this.playerId = Integer.parseInt(command[1]);
                             response = "valid";

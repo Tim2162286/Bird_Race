@@ -37,7 +37,7 @@ public class SquareObstacle extends ObstacleMasterClass {
         areaA.intersect(new Area(topShape));
         Area areaB = new Area(bird);
         areaB.intersect(new Area(bottomShape));
-        return false;//!(areaB.isEmpty() && areaA.isEmpty());
+        return !(areaB.isEmpty() && areaA.isEmpty());
     }
     public void reset(){super.reset();}
 }

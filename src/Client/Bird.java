@@ -14,7 +14,7 @@ public class Bird implements Runnable {
     private ArrayList<ObstacleMasterClass> obstacleList;
     private double yVel;
     private double yPos;
-    private static final double yAccel = 400;
+    private static final double yAccel = 420;
     private static final int birdDiameter = 60;
     private static int updateDelay;
     private static final int xPos = 60;
@@ -44,7 +44,7 @@ public class Bird implements Runnable {
     }
 
 
-    public void flap(){yVel -= 300;}
+    public void flap(){yVel -= 320;}
 
     public void setScore(int Score){
         score = Score;
