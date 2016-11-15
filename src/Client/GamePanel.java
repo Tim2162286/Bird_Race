@@ -177,14 +177,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         g.setColor(Color.black);
         g.setFont(new Font("Arial", 1, 20));
-        g.drawString("LEADERBOARD:",15, HEIGHT - BOTTOM_HEIGHT + 22);
-        for (int i=0;i<leaderList.length && i<3;i++){
-            g.drawString(leaderList[i][0]+" "+leaderList[i][1],15,HEIGHT-BOTTOM_HEIGHT+40+(18*i));
+        if(!bird.finished()) {
+            g.drawString("LEADERBOARD:", 15, HEIGHT - BOTTOM_HEIGHT + 22);
+            for (int i = 0; i < leaderList.length && i < 3; i++) {
+                g.drawString(leaderList[i][0] + " " + leaderList[i][1], 15, HEIGHT - BOTTOM_HEIGHT + 40 + (18 * i));
+            }
         }
         g.drawString("START",WIDTH/4-75, HEIGHT - BOTTOM_HEIGHT + 22);
         g.drawString("FINISH",3*WIDTH/4+10, HEIGHT - BOTTOM_HEIGHT + 22);
-        g.drawString("TIME: "+formatTime((int)(System.currentTimeMillis()-startTime)),WIDTH-200, HEIGHT - BOTTOM_HEIGHT + 22);
-
+        if(!bird.finished()) {
+            g.drawString("TIME: " + formatTime((int) (System.currentTimeMillis() - startTime)), WIDTH - 200, HEIGHT - BOTTOM_HEIGHT + 22);
+        }
         g.setFont(new Font("Arial", 1, 80));
         if(bird.finished()){
             if (notDone){
