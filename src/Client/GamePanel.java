@@ -70,6 +70,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             catch(InterruptedException e){}
         }
         client.setHandle(this.name);
+        client.updateObstaclesPassed(0);
         client.requestGameId();
         client.requestPlayerId();
         client.requestHandles();
