@@ -54,13 +54,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     public GamePanel(){
+        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY,OBSTACAL_COUNT);
         Timer timer = new Timer(UPDATE_DELAY, this);
         //this.addKeyListener(this);
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addKeyListener(this);
         timer.start();
-        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY,OBSTACAL_COUNT);
+
         this.repaint();
         (new Thread(bird)).start();
     }
