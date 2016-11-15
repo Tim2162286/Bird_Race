@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Random rand;
-    private int startTime;
+    private long startTime;
     private int OBSTACLE_COUNT=50;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
@@ -88,7 +88,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.addKeyListener(this);
         timer.start();
         this.repaint();
-        startTime = (int)System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         (new Thread(bird)).start();
     }
 
@@ -169,14 +169,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         g.setFont(new Font("Arial", 1, 80));
         if(bird.finished()){
-            client.setFinishTime((int)System.currentTimeMillis()-startTime);
+            client.setFinishTime(System.currentTimeMillis()-startTime);
             client.requestFinishTimes();
-            int finalTimes [] = client.getFinishTimes();
+            long finalTimes [] = client.getFinishTimes();
             g.drawString("LEADERBOARD",WIDTH / 4 + 25, 100);
             for (int i=0;i<leaderList.length;i++){
                 g.drawString(Integer.toString(i+1) + ".",WIDTH/4-100,175+(75*i));
-                g.drawString(leaderList[i][0],WIDTH/4+25,175+(75*i));
-                g.drawString(Integer.toString(finalTimes[i]/1000),3*WIDTH/4-100,175+(75*i));
+                g.drawString(playerNameList[i],WIDTH/4+25,175+(75*i));
+                g.drawString(Integer.toString((int)finalTimes[i]/1000),3*WIDTH/4-100,175+(75*i));
             }
         }
         else {
