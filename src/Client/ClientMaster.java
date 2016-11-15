@@ -20,7 +20,7 @@ public class ClientMaster implements Runnable {
     private int obstacleCount;
     private String[] playerNames;
     private int[] obstaclesPassed;
-    private int[] playerFinishTimes;
+    private long[] playerFinishTimes;
     private int gameId;
     private boolean ready;
     private int playerId;
@@ -32,7 +32,7 @@ public class ClientMaster implements Runnable {
         commandQueue = new ArrayList<String>();
         ready = false;
         this.obstaclesPassed = new int[] {0,0};
-        this.playerFinishTimes = new int[] {0,0};
+        this.playerFinishTimes = new long[] {0,0};
         this.playerNames = new String[] {"notset", "notset2"};
         this.gameId = 0;
         this.playerId = -1;
@@ -68,7 +68,7 @@ public class ClientMaster implements Runnable {
 
                         case "getscores":
                             String[] scores = serverResponse.split("\\s");
-                            this.playerFinishTimes = new int[scores.length];
+                            this.playerFinishTimes = new long[scores.length];
                             for (int i = 0; i < scores.length; i++) {
                                 this.playerFinishTimes[i] = Integer.parseInt(scores[i]);
                             }
