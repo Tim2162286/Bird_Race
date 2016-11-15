@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 public class BirdRace {
-    public String name = "Tim";
+    public String name = "jon";
     public int obstacleCount = 50;
     public static GamePanel birdracepanel;
     public final int WIDTH = 1280;  // 16:9 aspect ratio

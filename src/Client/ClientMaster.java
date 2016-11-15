@@ -169,7 +169,7 @@ public class ClientMaster implements Runnable {
         return this.ready;
     }
 
-    public void setFinishTime(int time) {
+    public void setFinishTime(long time) {
         commandQueue.add("finished " + time);
     }
 
@@ -177,7 +177,7 @@ public class ClientMaster implements Runnable {
         commandQueue.add("getscores");
     }
 
-    public int[] getFinishTimes() {
+    public long[] getFinishTimes() {
         return this.playerFinishTimes;
     }
 
