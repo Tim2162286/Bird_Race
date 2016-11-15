@@ -20,7 +20,7 @@ public class BirdRace {
     public BirdRace(){
         JFrame frame = new JFrame();
 
-        frame.add(new GamePanel());
+        frame.add(new GamePanel("Tim"));
         frame.setTitle("BirdRace");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
