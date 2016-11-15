@@ -5,6 +5,7 @@ package Client;
  */
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -24,12 +25,22 @@ public class BirdRace {
         do {
             name = JOptionPane.showInputDialog(frame, "Enter a nickname (no spaces):");
         } while (name == null);
-        frame.add(new GamePanel(name));
         frame.setTitle("BirdRace");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setResizable(false);
+        JPanel temp = new JPanel();
+        JLabel text = new JLabel("Waiting for players...");
+        text.setFont(new Font("Calibri",1,20));
+        temp.add(text);
+        frame.add(temp);
         frame.setVisible(true);
+        GamePanel game = new GamePanel(name);
+        frame.add(game);
+        frame.remove(temp);
+        game.requestFocusInWindow();
+        frame.revalidate();
+
         frame.addKeyListener(birdracepanel);
 
     }

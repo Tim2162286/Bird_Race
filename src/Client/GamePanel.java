@@ -83,7 +83,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         client.requestObstaclesPassed();
         rand = new Random(client.getGameId());
         bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY, OBSTACLE_COUNT);
-        while (client.backlog()){System.out.println("hi");}
+        while (client.backlog()){
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {}
+        }
         id = client.getPlayerId();
         playerNameList = client.getHandles();
         playerScoreList = client.getObstaclesPassed();
