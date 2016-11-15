@@ -91,9 +91,12 @@ public class Bird implements Runnable {
     }
 
     public void paint(Graphics2D graphics){
-        for (ObstacleMasterClass i:obstacleList){
-            i.paint(graphics);
+        for (short i = 0; i < obstacleList.size(); i++) {
+            obstacleList.get(i).paint(graphics);
         }
+        /*for (ObstacleMasterClass i:obstacleList){
+            i.paint(graphics);
+        }*/
         graphics.setColor((Color.red));
         graphics.fill(bird);
     }
