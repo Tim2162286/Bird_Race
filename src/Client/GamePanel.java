@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Random rand;
-    private int OBSTACLE_COUNT;
+    private final int OBSTACAL_COUNT = 20;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 17;
@@ -55,9 +55,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         return leaders;
     }
 
-    public GamePanel(String name, int obstacleCount){
+    public GamePanel(String name){
         this.name = name;
-        OBSTACLE_COUNT = obstacleCount;
         try{
              client = new ClientMaster();
         }
@@ -69,14 +68,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             }
             catch(InterruptedException e){}
         }
-        client.setHandle(this.name);
-        client.updateObstaclesPassed(0);
+        client.setHandle("Tim");
         client.requestGameId();
         client.requestPlayerId();
         client.requestHandles();
         client.requestObstaclesPassed();
         rand = new Random(client.getGameId());
-        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY, OBSTACLE_COUNT);
+        bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY,OBSTACAL_COUNT);
         while (client.backlog()){System.out.println("hi");}
         id = client.getPlayerId();
         playerNameList = client.getHandles();
@@ -95,7 +93,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e){
         time += UPDATE_DELAY;
         this.repaint();
-        if (time >= 500){
+        if (time >= 1000){
             client.updateObstaclesPassed(bird.getScore());
             playerScoreList = client.getObstaclesPassed();
             leaderList = getLeaderList(playerNameList.clone(),playerScoreList.clone());
@@ -140,11 +138,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.fillRect(WIDTH/4, HEIGHT - BOTTOM_HEIGHT + 5, WIDTH/2, BOTTOM_HEIGHT);
 
         for (int i=0;i<playerNameList.length;i++) {
-            if (i == id)
+            if (playerNameList[i].equals(name))
                 g.setColor(Color.red);
             else
                 g.setColor(Color.black);
-            g.fillOval(WIDTH/4+1+playerScoreList[i]*(WIDTH/2-42)/ OBSTACLE_COUNT,HEIGHT-BOTTOM_HEIGHT+i*11+4  , 10, 10);
+            g.fillOval(WIDTH/4+1+playerScoreList[i]*(WIDTH/2-42)/OBSTACAL_COUNT,HEIGHT-BOTTOM_HEIGHT+i*11+4  , 10, 10);
         }
 
 
