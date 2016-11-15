@@ -124,6 +124,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     }
 
+    private String formatTime(int time){
+        int minutes = (time/10)/6000;
+        int seconds = ((time/10)%6000)/100;
+        int decimal = (time/10)%100;
+        String mm = (minutes==0)?"00":(minutes<10)?"0"+Integer.toString(minutes):Integer.toString(minutes);
+        String ss = (seconds==0)?"00":(seconds<10)?"0"+Integer.toString(seconds):Integer.toString(seconds);
+        String dd = (decimal==0)?"00":(decimal<10)?"0"+Integer.toString(decimal):Integer.toString(decimal);
+        return (mm+":"+ss+"."+dd);
+    }
+
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -167,7 +177,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         }
         g.drawString("START",WIDTH/4-75, HEIGHT - BOTTOM_HEIGHT + 22);
         g.drawString("FINISH",3*WIDTH/4+10, HEIGHT - BOTTOM_HEIGHT + 22);
-        g.drawString("TIME:",WIDTH-100, HEIGHT - BOTTOM_HEIGHT + 22);
+        g.drawString("TIME: "+formatTime((int)(System.currentTimeMillis()-startTime)),WIDTH-200, HEIGHT - BOTTOM_HEIGHT + 22);
 
         g.setFont(new Font("Arial", 1, 80));
         if(bird.finished()){
@@ -181,7 +191,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             for (int i=0;i<leaderList.length;i++){
                 g.drawString(Integer.toString(i+1) + ".",WIDTH/4-100,175+(75*i));
                 g.drawString(playerNameList[i],WIDTH/4+25,175+(75*i));
-                g.drawString(Double.toString(((int)finalTimes[i]/10)/100.0),3*WIDTH/4-100,175+(75*i));
+                g.drawString(formatTime((int)(finalTimes[i])),3*WIDTH/4-100,175+(75*i));
             }
         }
         else {
