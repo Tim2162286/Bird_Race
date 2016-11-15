@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class ClientMaster implements Runnable {
     static final int PORT = 29517;
-    static final String HOSTNAME = "localhost";
+    static final String HOSTNAME = "jonbush.net";
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;

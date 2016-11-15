@@ -13,10 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
-    private final Random rand = new Random(1111);
+    private Random rand;
     private final int OBSTACAL_COUNT = 1;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
@@ -25,11 +26,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Bird bird;
     private String name;
     public int press;
-    String playerNameList[] = {"P1","P2","P3","P4","P5","P6","P7"};
-    int playerScoreList[] = {0,50,0,0,0,0,0,0,0,0,0};
-    String leaderList[][] = getLeaderList(playerNameList.clone(),playerScoreList.clone());
+    String playerNameList[];
+    int playerScoreList[];
+    String leaderList[][];
     int time = 0;
     private ClientMaster client;
+
+
 
     private String[][] getLeaderList(String[] playerNameList, int[] ScoreList){
         int length;
@@ -54,6 +57,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     public GamePanel(){
+        name = "Tim";
+        try{
+            client = new ClientMaster();
+        }
+        catch (IOException e){}
+        (new Thread(client)).start();
+        while (!client.isReady()){
+            try {
+                Thread.sleep(100);
+            }
+            catch (InterruptedException e) {}
+        }
+        client.setHandle(name);
+        client.requestGameId();
+        client.requestHandles();
+        client.requestObstaclesPassed();
+        while(client.backlog()){
+
+        }
+        rand = new Random(client.getGameId());
         bird = new Bird(rand, WIDTH, HEIGHT, BOTTOM_HEIGHT, UPDATE_DELAY,OBSTACAL_COUNT);
         Timer timer = new Timer(UPDATE_DELAY, this);
         //this.addKeyListener(this);
@@ -61,25 +84,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.requestFocusInWindow();
         this.addKeyListener(this);
         timer.start();
-
         this.repaint();
+        playerNameList = client.getHandles();
+        playerScoreList = client.getObstaclesPassed();
+        leaderList = getLeaderList(playerNameList,playerScoreList);
         (new Thread(bird)).start();
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        /*synchronized (this) {
-            if (!bird.update()) {
-                this.repaint();
-                bird.pause();
-            } else {
-                this.repaint();
-            }
-        }*/
-        playerScoreList[0] = bird.getScore();
         time += UPDATE_DELAY;
         this.repaint();
         if (time >= 1000){
+            client.updateObstaclesPassed(bird.getScore());
+            playerScoreList = client.getObstaclesPassed();
             leaderList = getLeaderList(playerNameList.clone(),playerScoreList.clone());
             time = 0;
         }
