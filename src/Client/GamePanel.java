@@ -68,7 +68,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             }
             catch(InterruptedException e){}
         }
-        client.setHandle("Tim");
+        client.setHandle("Celso");
+        client.updateObstaclesPassed(0);
         client.requestGameId();
         client.requestPlayerId();
         client.requestHandles();
@@ -166,7 +167,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         g.setFont(new Font("Arial", 1, 80));
         if(bird.finished()){
-            g.drawString("You Won!", 450, HEIGHT / 2 - 50);
+            client.requestFinishTimes();
+            int finalTimes [] = client.getFinishTimes();
+            g.drawString("LEADERBOARD",WIDTH / 4 + 25, 100);
+            for (int i=0;i<3;i++){
+                g.drawString(Integer.toString(i+1) + ".",WIDTH/4-100,175+(75*i));
+                g.drawString(leaderList[i][0],WIDTH/4+25,175+(75*i));
+                g.drawString(Integer.toString(finalTimes[i]/1000),3*WIDTH/4-100,175+(75*i));
+            }
         }
         else {
         g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
