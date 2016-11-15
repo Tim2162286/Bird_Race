@@ -18,7 +18,8 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Random rand;
-    private int OBSTACLE_COUNT;
+    private int startTime;
+    private int OBSTACLE_COUNT=50;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 17;
@@ -55,8 +56,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         return leaders;
     }
 
-    public GamePanel(String name, int obstacleCount){
-        OBSTACLE_COUNT = obstacleCount;
+    public GamePanel(String name){;
         this.name = name;
         try{
              client = new ClientMaster();
@@ -88,6 +88,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.addKeyListener(this);
         timer.start();
         this.repaint();
+        startTime = (int)System.currentTimeMillis();
         (new Thread(bird)).start();
     }
 
@@ -168,6 +169,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         g.setFont(new Font("Arial", 1, 80));
         if(bird.finished()){
+            client.setFinishTime((int)System.currentTimeMillis()-startTime);
             client.requestFinishTimes();
             int finalTimes [] = client.getFinishTimes();
             g.drawString("LEADERBOARD",WIDTH / 4 + 25, 100);

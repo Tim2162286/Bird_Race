@@ -17,7 +17,7 @@ public class ClientMaster implements Runnable {
     private PrintWriter out;
     private BufferedReader in;
     private ArrayList<String> commandQueue;
-
+    private int obstacleCount;
     private String[] playerNames;
     private int[] obstaclesPassed;
     private int[] playerFinishTimes;
