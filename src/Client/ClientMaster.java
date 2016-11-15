@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class ClientMaster implements Runnable {
     static final int PORT = 29517;
-    static final String HOSTNAME = "localhost";
+    static final String HOSTNAME = "jonbush.net";
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
@@ -31,6 +31,11 @@ public class ClientMaster implements Runnable {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         commandQueue = new ArrayList<String>();
         ready = false;
+        this.obstaclesPassed = new int[] {0,0};
+        this.playerFinishTimes = new int[] {0,0};
+        this.playerNames = new String[] {"notset", "notset2"};
+        this.gameId = 0;
+        this.playerId = -1;
     }
 
     public void run() {
@@ -158,7 +163,7 @@ public class ClientMaster implements Runnable {
         return this.obstaclesPassed;
     }
     public boolean isReady() {
-        System.out.println(backlog() + " " + commandQueue.size());
+        //System.out.println(backlog() + " " + commandQueue.size());
         if(!backlog())
             commandQueue.add("ready");
         return this.ready;
@@ -189,8 +194,8 @@ public class ClientMaster implements Runnable {
     }
 
     public boolean backlog() {
-        if (commandQueue.size() > 0)
-        System.out.println(commandQueue.get(0));
+        //if (commandQueue.size() > 0)
+        //System.out.println(commandQueue.get(0));
         return commandQueue.size() > 0;
     }
 }

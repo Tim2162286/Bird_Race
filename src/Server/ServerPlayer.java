@@ -145,7 +145,7 @@ public class ServerPlayer implements Runnable {
                         break;
 
                     case "getid":
-                        response = Integer.toString(this.playerId);
+                            response = Integer.toString(this.playerId);
                         break;
 
                     case "handle":  // Set the handle of the player
@@ -179,7 +179,11 @@ public class ServerPlayer implements Runnable {
                         break;
 
                     case "gameid":
-                        response = Integer.toString(gameState.getGameId());
+                        try {
+                            response = Integer.toString(gameState.getGameId());
+                        } catch (NullPointerException e) {
+                            response = "game_not_initialized";
+                        }
                         break;
 
                     case "disconnect":  // Disconnect from the server

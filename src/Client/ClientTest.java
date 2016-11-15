@@ -28,6 +28,10 @@ public class ClientTest {
             while (!inputLine.equals("exit")) {
                 String[] command = inputLine.split("\\s+");
                 switch (command[0]) {
+                    case "backlog":
+                        System.out.println("\t " + client.backlog());
+                        break;
+
                     case "updateObstaclesPassed":
                         client.updateObstaclesPassed(Integer.parseInt(command[1]));
                         System.out.println("\tUpdating obstacles passed");
