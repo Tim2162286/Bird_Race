@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 
 public class BirdRace {
+    public String name = "Tim";
+    public int obstacleCount = 50;
     public static GamePanel birdracepanel;
     public final int WIDTH = 1280;  // 16:9 aspect ratio
     public final int HEIGHT = 720;
@@ -20,7 +22,7 @@ public class BirdRace {
     public BirdRace(){
         JFrame frame = new JFrame();
 
-        frame.add(new GamePanel("Tim"));
+        frame.add(new GamePanel(name, obstacleCount));
         frame.setTitle("BirdRace");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
