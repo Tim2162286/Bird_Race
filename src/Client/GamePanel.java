@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private final Random rand = new Random(1111);
-    private final int OBSTACAL_COUNT = 50;
+    private final int OBSTACAL_COUNT = 1;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 17;
@@ -149,11 +149,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.drawString("TIME:",WIDTH-100, HEIGHT - BOTTOM_HEIGHT + 22);
 
         g.setFont(new Font("Arial", 1, 80));
-        if(bird.crashed()){
-            g.drawString("Respawning In 3 Sec...", 200, HEIGHT / 2 - 50);
+        if(bird.finished()){
+            g.drawString("You Won!", 450, HEIGHT / 2 - 50);
         }
         else {
-            g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
+        g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
         }
     }
 }

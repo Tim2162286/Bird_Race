@@ -22,6 +22,7 @@ public class Bird implements Runnable {
     private int height;
     private int bottomHeight;
     private boolean crashed = false;
+    private boolean finished = false;
     private int score = 0;
     private int GAME_LENGTH;
 
@@ -105,11 +106,11 @@ public class Bird implements Runnable {
     public synchronized void pause() {
         bird.setFrame(xPos, yPos, birdDiameter, birdDiameter);
         long current = System.currentTimeMillis();
-        while(System.currentTimeMillis() < current + 3000){
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) { }
-        }
+        //while(System.currentTimeMillis() < current + 3000){
+        //    try {
+        //        Thread.sleep(50);
+        //    } catch (InterruptedException e) { }
+        //}
         yVel = -yAccel*((double)updateDelay/1000);
         if (yPos<=0 || yPos>=height-bottomHeight-birdDiameter)
             yPos = 240;
@@ -119,24 +120,34 @@ public class Bird implements Runnable {
     public boolean crashed(){
         return crashed;
     }
+    public boolean finished(){return finished;}
 
     public void run() {
         while(!false) {
-            if(!this.update() || obstacleList.get(0).isCollided(bird)) {
-                crashed = true;
-                int backup = 460 - obstacleList.get(0).getXPos();
-                for (ObstacleMasterClass i:obstacleList){
-                    //i.reset();
-                    i.moveObstacleBack(backup);
+            if (obstacleList.size()>0) {
+                if (!this.update() || (obstacleList.size() > 0 && obstacleList.get(0).isCollided(bird))) {
+                    crashed = true;
+                    int backup = width - obstacleList.get(0).getXPos();
+                    for (ObstacleMasterClass i : obstacleList) {
+                        //i.reset();
+                        i.moveObstacleBack(backup);
+                    }
+                    obstacleList.get(0).moveLastXPosBack(backup);
+                    this.pause();
+                    crashed = false;
                 }
-                obstacleList.get(0).moveLastXPosBack(backup);
-                this.pause();
-                crashed = false;
+                try {
+                    Thread.sleep(updateDelay);
+                } catch (InterruptedException e) {
+                    Thread.interrupted();
+                }
             }
-            try {
-                Thread.sleep(updateDelay);
-            } catch (InterruptedException e) {
-                Thread.interrupted();
+            else {
+                finished = true;
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                }
             }
         }
     }
