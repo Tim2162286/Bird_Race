@@ -21,7 +21,9 @@ public class BirdRace {
 
     public BirdRace(){
         JFrame frame = new JFrame();
-
+        do {
+            name = JOptionPane.showInputDialog(frame, "Enter a nickname (no spaces):");
+        } while (name == null);
         frame.add(new GamePanel(name));
         frame.setTitle("BirdRace");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

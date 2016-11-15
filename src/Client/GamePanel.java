@@ -64,6 +64,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
              client = new ClientMaster();
         }
         catch(IOException e){}
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.addKeyListener(this);
+        this.repaint();
         (new Thread(client)).start();
         while (!client.isReady()){
             try{
@@ -85,11 +89,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         playerScoreList = client.getObstaclesPassed();
         leaderList = getLeaderList(playerNameList.clone(),playerScoreList.clone());
         Timer timer = new Timer(UPDATE_DELAY, this);
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-        this.addKeyListener(this);
+
         timer.start();
-        this.repaint();
+
         startTime = System.currentTimeMillis();
         (new Thread(bird)).start();
     }
