@@ -75,7 +75,7 @@ public class ClientMaster implements Runnable {
                             break;
 
                         case "ready":
-                            this.ready = serverResponse.equals("start");
+                            this.ready = serverResponse.equals("started");
                             break;
 
                         case "setid":   // Set the ID of the player, useful for reconnecting
@@ -162,12 +162,15 @@ public class ClientMaster implements Runnable {
     public int[] getObstaclesPassed() {
         return this.obstaclesPassed;
     }
+
     public boolean isReady() {
         //System.out.println(backlog() + " " + commandQueue.size());
         if(!backlog())
             commandQueue.add("ready");
         return this.ready;
     }
+
+    //public boolean isReady() { return this.ready; }
 
     public void setFinishTime(long time) {
         commandQueue.add("finished " + time);

@@ -71,7 +71,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         (new Thread(client)).start();
         while (!client.isReady()){
             try{
-                Thread.sleep(100);
+                Thread.sleep(200);
             }
             catch(InterruptedException e){}
         }
@@ -104,7 +104,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e){
         time += UPDATE_DELAY;
         this.repaint();
-        if (time >= 1000){
+        if (time >= 500){
             client.updateObstaclesPassed(bird.getScore());
             playerScoreList = client.getObstaclesPassed();
             leaderList = getLeaderList(playerNameList.clone(),playerScoreList.clone());

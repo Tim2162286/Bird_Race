@@ -25,6 +25,9 @@ public class ServerPlayer implements Runnable {
     private boolean ready;          // Initial communication received from server
     private Thread playerThread;    // Thread for this player
     private long finishTime;        // Score for this player
+    private long lastCommunication; // Time last communication was received
+
+    private static final int TIMEOUT = 30000;
 
     /**
      * Creates a new ServerPlayer with a random playerId and the default handle
@@ -37,6 +40,7 @@ public class ServerPlayer implements Runnable {
         this.playerThread = new Thread(this);
         this.playerThread.start();
         this.finishTime = -1;
+        this.lastCommunication = System.currentTimeMillis();
     }
 
     /**
@@ -85,9 +89,11 @@ public class ServerPlayer implements Runnable {
         try {
             PrintWriter out = new PrintWriter(playerSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(playerSocket.getInputStream()));
+            playerSocket.setSoTimeout(TIMEOUT);
             String inputLine, response;
             boolean disconnect = false;
-            while (!disconnect && (inputLine = in.readLine()) != null) {
+            while (!disconnect && (System.currentTimeMillis() - lastCommunication) < 2*TIMEOUT &&(inputLine = in.readLine()) != null) {
+                lastCommunication = System.currentTimeMillis();
                 String[] command = inputLine.split("\\s+");
                 response = "error";
                 switch (command[0]) {   // Perform the action corresponding to the command issued by client
@@ -123,18 +129,19 @@ public class ServerPlayer implements Runnable {
                         break;
 
                     case "ready":
-                        this.ready = true;
+                        response = (this.gameState == null) ? "not_started" : "started";
+                        /*this.ready = true;
                         while (this.gameState == null) {
                             //System.out.println("Game state is: " + gameState);
                             try {
                                 Thread.sleep(50);
 
                             } catch (InterruptedException e) {}
-                        }
-                        response = "start";
+                        }*/
+                        //response = "start";
                         break;
 
-                    case "setid":   // Set the ID of the player, u seful for reconnecting
+                    case "setid":   // Set the ID of the player, useful for reconnecting
                         try {
                             this.playerId = Integer.parseInt(command[1]);
                             response = "valid";
