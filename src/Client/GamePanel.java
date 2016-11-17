@@ -20,7 +20,7 @@ import java.util.Random;
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Random rand;
     private long startTime;
-    private int OBSTACLE_COUNT=10;
+    private int OBSTACLE_COUNT=50;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 17;
@@ -35,8 +35,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private String leaderList[][];
     private int finalList[][];
     private int time = 0;
-    //int defaultSize = 1;
-    //ClientMaster defaultList[];
     private ClientMaster client;
 
     private String[][] getLeaderList(String[] playerNameList, int[] ScoreList){
