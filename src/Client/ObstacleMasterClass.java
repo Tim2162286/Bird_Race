@@ -38,7 +38,8 @@ public abstract class ObstacleMasterClass {
 
     }
 
-    public void paint(Graphics2D graphics){}
+    public abstract void paint(Graphics2D graphics);
+
     public void update(int numObstacles){
         xPos -=((double)UPDATE_DELAY/1000)*xVel;
         lastXPos -=(((double)UPDATE_DELAY/1000)*xVel)/numObstacles;

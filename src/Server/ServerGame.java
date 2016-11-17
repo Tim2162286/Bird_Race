@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ServerGame implements Runnable {
 
     private static final int MAX_PLAYERS = 7;
-    private static final long JOIN_TIME = 10000; // Wait this long (ms) for more people to join
+    private static final long JOIN_TIME = 12000; // Wait this long (ms) for more people to join
 
     private ArrayList<ServerPlayer> players;
     private GameState gameState;
@@ -29,7 +29,7 @@ public class ServerGame implements Runnable {
     public boolean addPlayer(ServerPlayer player) {
         if (this.players.size() < MAX_PLAYERS && this.open) {  // Not full and open
             this.players.add(player);
-            this.lastJoinTime = System.currentTimeMillis();
+            this.lastJoinTime = System.currentTimeMillis() + 1000 * players.size();
             this.open = players.size() < MAX_PLAYERS;
             player.setPlayerNum(players.size() - 1);
             System.out.println("New player added to game");

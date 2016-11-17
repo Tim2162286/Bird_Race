@@ -149,7 +149,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void paintComponent(Graphics g){
+        Graphics2D g2 = (Graphics2D)g;
+        //g2.scale(.5,.5);
+
         super.paintComponent(g);
+
         g.setColor(Color.cyan);
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
@@ -179,7 +183,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.fillRect(3*WIDTH/4-37, HEIGHT - BOTTOM_HEIGHT + 5, 4, BOTTOM_HEIGHT + 5);
 
         g.setColor(Color.yellow);
-        Graphics2D g2 = (Graphics2D)g;
+
         bird.paint(g2);
 
         g.setColor(Color.black);
@@ -223,5 +227,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         else {
         g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
         }
+
     }
 }

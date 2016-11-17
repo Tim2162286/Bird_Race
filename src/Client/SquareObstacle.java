@@ -19,7 +19,8 @@ public class SquareObstacle extends ObstacleMasterClass {
 
     @Override
     public void paint(Graphics2D graphics) {
-        graphics.fill(topShape);;
+
+        graphics.fill(topShape);
         graphics.fill(bottomShape);
     }
     @Override
