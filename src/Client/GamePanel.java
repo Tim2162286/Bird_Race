@@ -20,7 +20,7 @@ import java.util.Random;
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Random rand;
     private long startTime;
-    private int OBSTACLE_COUNT=20;
+    private int OBSTACLE_COUNT=10;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 17;
@@ -30,19 +30,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private int id;
     private boolean notDone = true;
     public int press;
-    String playerNameList[];
-    int playerScoreList[];
-    String leaderList[][];
-    int time = 0;
+    private String playerNameList[];
+    private int playerScoreList[];
+    private String leaderList[][];
+    private int finalList[][];
+    private int time = 0;
+    //int defaultSize = 1;
+    //ClientMaster defaultList[];
     private ClientMaster client;
 
     private String[][] getLeaderList(String[] playerNameList, int[] ScoreList){
         int length;
         int max;
-        if (playerNameList.length>2)
-            length = 3;
-        else
+        if (playerNameList.length<3)
             length = 2;
+        else
+            length = 3;
         String leaders[][] = new String[length][2];
         for (int i=0;i<leaders.length;i++) {
             max = 0;
@@ -60,8 +63,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     public GamePanel(String name){;
         this.name = name;
+        //defaultList = new ClientMaster[defaultSize];
         try{
-             client = new ClientMaster();
+            client = new ClientMaster();
+            //for (int i=0;i<defaultSize;i++)
+                //defaultList[i] = new ClientMaster();
         }
         catch(IOException e){}
         this.setFocusable(true);
@@ -92,6 +98,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         playerNameList = client.getHandles();
         playerScoreList = client.getObstaclesPassed();
         leaderList = getLeaderList(playerNameList.clone(),playerScoreList.clone());
+        finalList = new int[playerNameList.length][2];
         Timer timer = new Timer(UPDATE_DELAY, this);
 
         timer.start();
@@ -195,12 +202,21 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 notDone = false;
             }
             client.requestFinishTimes();
-            long finalTimes [] = client.getFinishTimes();
+            int finalTimes [] = client.getFinishTimes();
+            for (int i=0;i<finalTimes.length;i++){
+                finalList[i][0] = i;
+                finalList[i][1] = finalTimes[i];
+            }
             g.drawString("LEADERBOARD",WIDTH / 4 + 25, 100);
-            for (int i=0;i<leaderList.length;i++){
-                g.drawString(Integer.toString(i+1) + ".",WIDTH/4-100,175+(75*i));
-                g.drawString(playerNameList[i],WIDTH/4+25,175+(75*i));
-                g.drawString(formatTime((int)(finalTimes[i])),3*WIDTH/4-100,175+(75*i));
+            g.setFont(new Font("Arial", 1, 40));
+            for (int i=0;i<finalList.length;i++){
+                g.drawString(Integer.toString(i+1) + ".",WIDTH/4-100,175+(50*i));
+                g.drawString(playerNameList[finalList[i][0]],WIDTH/4-60,175+(50*i));
+                if (finalList[i][1]!=0)
+                    g.drawString(formatTime(finalList[i][1]),3*WIDTH/4-30,175+(50*i));
+                else
+                    g.drawString("Not Finished",3*WIDTH/4-30,175+(50*i));
+
             }
         }
         else {
