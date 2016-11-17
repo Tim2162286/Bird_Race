@@ -203,6 +203,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             }
             client.requestFinishTimes();
             int finalTimes [] = client.getFinishTimes();
+            int pos;
             for (int i=0;i<finalTimes.length;i++){
                 finalList[i][0] = i;
                 finalList[i][1] = finalTimes[i];
