@@ -25,6 +25,7 @@ public class BirdRace {
         do {
             name = JOptionPane.showInputDialog(frame, "Enter a nickname (no spaces):");
         } while (name == null);
+        name = NameFormatter.format(name);
         frame.setTitle("BirdRace");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
