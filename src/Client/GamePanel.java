@@ -40,6 +40,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private int time = 0;
     private boolean isSorted[];
     private ClientMaster client;
+    private double scale;
+    private JFrame frame;
 
     private String[][] getLeaderList(String[] playerNameList, int[] ScoreList){
         int length;
@@ -63,7 +65,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         return leaders;
     }
 
-    public GamePanel(String name){;
+    public GamePanel(String name, JFrame frame){
+        this.frame = frame;
+        this.scale = 1.;
         this.name = name;
         //defaultList = new ClientMaster[defaultSize];
         try{
@@ -108,6 +112,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
         startTime = System.currentTimeMillis();
         (new Thread(bird)).start();
+    }
+
+    public void scale(double scale) {
+        this.scale = scale;
     }
 
     @Override
@@ -162,7 +170,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     @Override
     public void paintComponent(Graphics g){
         Graphics2D g2 = (Graphics2D)g;
-        //g2.scale(.5,.5);
+        //Dimension size = frame.getContentPane().getSize();
+        //this.scale = Math.min((double)size.getHeight()/(double)HEIGHT, (double)size.getWidth()/(double)WIDTH);
+        Rectangle r = frame.getBounds();
+        int h = r.height;
+        int w = r.width;
+        this.scale = Math.min((double)h/(double)HEIGHT, (double)w/(double)WIDTH);
+        int newHeight = (int)(HEIGHT*scale);
+        int newWidth =  (int)(WIDTH*scale);
+        if(w - newWidth > 2) {
+            frame.setSize(new Dimension(newWidth, (int)h));
+        } else if (h - newHeight > 2) {
+            frame.setSize(new Dimension((int)w, newHeight));
+        }
+        //frame.setSize(new Dimension(newWidth, newHeight));
+        //System.out.println(difference);
+        g2.scale(this.scale, this.scale);
 
         super.paintComponent(g);
 
