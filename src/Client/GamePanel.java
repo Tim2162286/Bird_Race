@@ -263,12 +263,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        bird.flap();
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        bird.flap();
     }
 
     @Override
