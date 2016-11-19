@@ -16,12 +16,13 @@ public class BirdRace {
     public final int WIDTH = 1280;  // 16:9 aspect ratio
     public final int HEIGHT = 720;
     public ArrayList<ObstacleMasterClass> obstacleList;
+    private JFrame frame;
     //public Renderer renderer
 
     private static final int UPDATE_DELAY = 40;     // Time between updates in ms
 
-    public BirdRace(){
-        JFrame frame = new JFrame();
+    public BirdRace() {
+        frame = new JFrame();
         do {
             name = JOptionPane.showInputDialog(frame, "Enter a nickname (no spaces):");
         } while (name == null);
@@ -29,14 +30,14 @@ public class BirdRace {
         frame.setTitle("BirdRace");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
-        frame.setResizable(false);
+        frame.setResizable(true);
         JPanel temp = new JPanel();
         JLabel text = new JLabel("Waiting for players...");
         text.setFont(new Font("Calibri",1,20));
         temp.add(text);
         frame.add(temp);
         frame.setVisible(true);
-        GamePanel game = new GamePanel(name);
+        GamePanel game = new GamePanel(name, frame);
         frame.add(game);
         frame.remove(temp);
         game.requestFocusInWindow();
