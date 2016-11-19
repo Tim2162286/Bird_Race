@@ -15,12 +15,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Arc2D;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private Random rand;
     private long startTime;
-    private int OBSTACLE_COUNT=50;
+    private int OBSTACLE_COUNT=10;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 17;
@@ -30,11 +31,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private int id;
     private boolean notDone = true;
     public int press;
+    int score[];
+    int finalTimes[];
     private String playerNameList[];
     private int playerScoreList[];
     private String leaderList[][];
-    private int finalList[][];
+    private ArrayList<int[]> finalList;
     private int time = 0;
+    private boolean isSorted[];
     private ClientMaster client;
 
     private String[][] getLeaderList(String[] playerNameList, int[] ScoreList){
@@ -96,7 +100,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         playerNameList = client.getHandles();
         playerScoreList = client.getObstaclesPassed();
         leaderList = getLeaderList(playerNameList.clone(),playerScoreList.clone());
-        finalList = new int[playerNameList.length][2];
+        finalList = new ArrayList(playerNameList.length);
+        isSorted = new boolean[playerNameList.length];
         Timer timer = new Timer(UPDATE_DELAY, this);
 
         timer.start();
@@ -111,6 +116,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.repaint();
         if (time >= 500){
             client.updateObstaclesPassed(bird.getScore());
+            System.out.println("update\t"+bird.getScore());
             playerScoreList = client.getObstaclesPassed();
             leaderList = getLeaderList(playerNameList.clone(),playerScoreList.clone());
             time = 0;
@@ -183,7 +189,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.yellow);
 
         bird.paint(g2);
-
+        client.requestFinishTimes();
+        finalTimes = client.getFinishTimes();
+        for (int i=0;i<finalTimes.length;i++){
+            if (finalTimes[i]!=0 && !isSorted[i]){
+                int sort[] = new int[] {i,finalTimes[i]};
+                finalList.add(sort);
+                System.out.println("Added Score");
+                isSorted[i] = true;
+            }
+        }
         g.setColor(Color.black);
         g.setFont(new Font("Arial", 1, 20));
         if(!bird.finished()) {
@@ -198,25 +213,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             g.drawString("TIME: " + formatTime((int) (System.currentTimeMillis() - startTime)), WIDTH - 200, HEIGHT - BOTTOM_HEIGHT + 22);
         }
         g.setFont(new Font("Arial", 1, 80));
+
         if(bird.finished()){
             if (notDone){
                 client.setFinishTime(System.currentTimeMillis()-startTime);
                 notDone = false;
             }
-            client.requestFinishTimes();
-            int finalTimes [] = client.getFinishTimes();
-            int pos;
-            for (int i=0;i<finalTimes.length;i++){
-                finalList[i][0] = i;
-                finalList[i][1] = finalTimes[i];
-            }
             g.drawString("LEADERBOARD",WIDTH / 4 + 25, 100);
             g.setFont(new Font("Arial", 1, 40));
-            for (int i=0;i<finalList.length;i++){
+            for (int i=0;i<finalList.size();i++){
+                score = finalList.get(i);
                 g.drawString(Integer.toString(i+1) + ".",WIDTH/4-100,175+(50*i));
-                g.drawString(playerNameList[finalList[i][0]],WIDTH/4-60,175+(50*i));
-                if (finalList[i][1]!=0)
-                    g.drawString(formatTime(finalList[i][1]),3*WIDTH/4-30,175+(50*i));
+                g.drawString(playerNameList[score[0]],WIDTH/4-60,175+(50*i));
+                if (score[1]!=0)
+                    g.drawString(formatTime(score[1]),3*WIDTH/4-30,175+(50*i));
                 else
                     g.drawString("Not Finished",3*WIDTH/4-30,175+(50*i));
 
