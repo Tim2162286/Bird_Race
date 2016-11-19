@@ -189,16 +189,19 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         g.setColor(Color.yellow);
 
         bird.paint(g2);
-        client.requestFinishTimes();
-        finalTimes = client.getFinishTimes();
-        for (int i=0;i<finalTimes.length;i++){
-            if (finalTimes[i]!=0 && !isSorted[i]){
-                int sort[] = new int[] {i,finalTimes[i]};
-                finalList.add(sort);
-                System.out.println("Added Score");
-                isSorted[i] = true;
+        if (time>=500){
+            client.requestFinishTimes();
+            finalTimes = client.getFinishTimes();
+            for (int i=0;i<finalTimes.length;i++){
+                if (finalTimes[i]!=0 && !isSorted[i]){
+                    int sort[] = new int[] {i,finalTimes[i]};
+                    finalList.add(sort);
+                    System.out.println("Added Score");
+                    isSorted[i] = true;
+                }
             }
         }
+
         g.setColor(Color.black);
         g.setFont(new Font("Arial", 1, 20));
         if(!bird.finished()) {
