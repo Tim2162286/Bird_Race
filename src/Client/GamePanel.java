@@ -9,16 +9,13 @@ import java.awt.*;
  */
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.geom.Arc2D;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GamePanel extends JPanel implements ActionListener, KeyListener {
+public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private Random rand;
     private long startTime;
     private int OBSTACLE_COUNT=10;
@@ -75,6 +72,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addKeyListener(this);
+        this.addMouseListener(this);
         this.repaint();
         (new Thread(client)).start();
         while (!client.isReady()){
@@ -237,6 +235,31 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         else {
         g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
         }
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        bird.flap();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }
