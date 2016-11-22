@@ -1,19 +1,13 @@
 package Client;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-
-
 /**
  * Created by jon on 10/28/2016.
  */
+import javax.swing.*;
+import java.awt.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;
-import java.awt.geom.Arc2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
