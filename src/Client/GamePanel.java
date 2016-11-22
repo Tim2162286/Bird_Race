@@ -1,5 +1,6 @@
 package Client;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,6 +12,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.*;
 import java.awt.geom.Arc2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -70,7 +73,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
         try{
             client = new ClientMaster();
             //for (int i=0;i<defaultSize;i++)
-                //defaultList[i] = new ClientMaster();
+            //defaultList[i] = new ClientMaster();
         }
         catch(IOException e){}
         this.setFocusable(true);
@@ -168,6 +171,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
     @Override
     public void paintComponent(Graphics g){
         Graphics2D g2 = (Graphics2D)g;
+        Graphics2D gg = (Graphics2D)g.create();
         //Dimension size = frame.getContentPane().getSize();
         //this.scale = Math.min((double)size.getHeight()/(double)HEIGHT, (double)size.getWidth()/(double)WIDTH);
         Rectangle r = frame.getBounds();
@@ -209,7 +213,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
                 g.setColor(Color.black);
             g.fillOval(WIDTH/4+1+playerScoreList[i]*(WIDTH/2-42)/ OBSTACLE_COUNT,HEIGHT-BOTTOM_HEIGHT+i*11+4  , 10, 10);
         }
-
 
         g.setColor(Color.red);
 
@@ -256,7 +259,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
             }
         }
         else {
-        g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
+            g.drawString(Integer.toString(bird.getScore()), WIDTH / 2 - 25, 100);
         }
 
     }

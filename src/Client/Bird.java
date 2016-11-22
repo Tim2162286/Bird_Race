@@ -4,6 +4,11 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.File;
+import javax.imageio.ImageIO;
+
 
 /**
  * Created by Tim on 11/4/2016.
@@ -13,11 +18,11 @@ public class Bird implements Runnable {
     private Random rand;
     private ArrayList<ObstacleMasterClass> obstacleList;
     private double yVel;
-    private double yPos;
+    public double yPos;
     private static final double yAccel = 420;
     private static final int birdDiameter = 60;
     private static int updateDelay;
-    private static final int xPos = 60;
+    public static final int xPos = 60;
     private int width;
     private int height;
     private int bottomHeight;
@@ -25,6 +30,8 @@ public class Bird implements Runnable {
     private boolean finished = false;
     private int score = 0;
     private int GAME_LENGTH;
+    private BufferedImage birdImage;
+    private TexturePaint birdImageTP;
 
     public Bird(Random rand, int width, int height, int bottomHeight, int updateDelay, int maxObsticals){
         this.rand = rand;
@@ -35,6 +42,10 @@ public class Bird implements Runnable {
         yPos = this.height/2;
         Bird.updateDelay = updateDelay;
         bird = new Ellipse2D.Double(birdDiameter, birdDiameter, this.width /4-10,yPos);
+        try{
+            birdImage = ImageIO.read(new File("C://Users//Celso//Documents//ASU//TERM 3//SER 215//Bird_Race//src//Client//Bird.png"));
+        }
+        catch(IOException e){}
         obstacleList = new ArrayList<ObstacleMasterClass>(4);
         for (int i=0;i<4;i++){
             obstacleList.add(new SquareObstacle(rand,height,bottomHeight,updateDelay));
@@ -70,7 +81,7 @@ public class Bird implements Runnable {
             if (score+obstacleList.size()<GAME_LENGTH)
                 obstacleList.add(new SquareObstacle(rand,height,bottomHeight,updateDelay));
             if (obstacleList.size() == 0){}
-                //End game
+            //End game
         }
         synchronized (this) {
             if (yPos < 0) {
@@ -98,7 +109,9 @@ public class Bird implements Runnable {
         /*for (ObstacleMasterClass i:obstacleList){
             i.paint(graphics);
         }*/
-        graphics.setColor((Color.red));
+        birdImageTP = new TexturePaint(birdImage,new Rectangle(xPos,(int)yPos,60,60));
+        graphics.setPaint(birdImageTP);
+        //graphics.setPaint((Color.red));
         graphics.fill(bird);
     }
 
