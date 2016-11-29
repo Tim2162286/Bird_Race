@@ -165,7 +165,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
     @Override
     public void paintComponent(Graphics g){
         Graphics2D g2 = (Graphics2D)g;
-        Graphics2D gg = (Graphics2D)g.create();
+
         //Dimension size = frame.getContentPane().getSize();
         //this.scale = Math.min((double)size.getHeight()/(double)HEIGHT, (double)size.getWidth()/(double)WIDTH);
         Rectangle r = frame.getBounds();
@@ -184,7 +184,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
         g2.scale(this.scale, this.scale);
 
         super.paintComponent(g);
-
         g.setColor(Color.cyan);
         g.fillRect(0, 0, WIDTH, HEIGHT);
 

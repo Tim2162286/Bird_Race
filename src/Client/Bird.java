@@ -43,7 +43,7 @@ public class Bird implements Runnable {
         Bird.updateDelay = updateDelay;
         bird = new Ellipse2D.Double(birdDiameter, birdDiameter, this.width /4-10,yPos);
         try{
-            birdImage = ImageIO.read(new File("C:/Users/Celso/Documents/ASU/TERM 3/SER 215/Bird_Race/src/Client/NewBird.png"));
+            birdImage = ImageIO.read(new File("src/Client/NewBird.png"));
         }
         catch(IOException e){}
         obstacleList = new ArrayList<ObstacleMasterClass>(4);
