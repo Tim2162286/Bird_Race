@@ -84,6 +84,10 @@ public class ServerPlayer implements Runnable {
         return this.finishTime;
     }
 
+    /**
+     * While running, the ServerPlayer instance listens for commands from a single client and executes actions
+     * according to those commands.
+     */
     @Override
     public void run() {
         try {
