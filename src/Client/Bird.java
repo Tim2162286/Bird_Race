@@ -31,6 +31,9 @@ public class Bird implements Runnable {
     private BufferedImage birdImage;
     private TexturePaint birdImageTP;
 
+    /**
+     * Creates object type Bird and obstacles
+     */
     public Bird(Random rand, int width, int height, int bottomHeight, int updateDelay, int maxObsticals){
         this.rand = rand;
         this.width = width;
@@ -53,13 +56,22 @@ public class Bird implements Runnable {
         }
     }
 
-
+    /**
+     * Bird velocity changes
+     */
     public void flap(){yVel -= 320;}
 
+    /**
+     *@return score, current score
+     */
     public int getScore(){
         return score;
     }
 
+    /**
+     * Updates velocity, obstacles, and position
+     * @return boolean, determines if bird has hit bounds
+     */
     public boolean update(){
         boolean remove = false;
         yPos += yVel * ((double) updateDelay / 1000.);
@@ -95,6 +107,10 @@ public class Bird implements Runnable {
         }
     }
 
+    /**
+     * Bird and Obstacles GUI.
+     * Bird filled with newBird.png texture and obstacles are yellow
+     */
     public void paint(Graphics2D graphics){
         for (short i = 0; i < obstacleList.size(); i++) {
             obstacleList.get(i).paint(graphics);
@@ -104,6 +120,9 @@ public class Bird implements Runnable {
         graphics.fill(bird);
     }
 
+    /**
+     * resets bird's position
+     */
     public synchronized void pause() {
         bird.setFrame(xPos, yPos, birdDiameter, birdDiameter);
         yVel = -yAccel*((double)updateDelay/1000);
@@ -111,12 +130,21 @@ public class Bird implements Runnable {
             yPos = 240;
     }
 
-    //Returns true if bird has crashed with obstacle, ceiling, or floor
+    /**
+     * @return crashed, true if bird has trashed and false if it has not
+     */
     public boolean crashed(){
         return crashed;
     }
+
+    /**
+     * @return finished, true if bird has reached 50 and false if it has not
+     */
     public boolean finished(){return finished;}
 
+    /**
+     * Collision detection with obstacles and collision handling
+     */
     public void run() {
         while(!false) {
             if (obstacleList.size()>0) {
