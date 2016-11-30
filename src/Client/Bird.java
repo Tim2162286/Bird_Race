@@ -104,7 +104,6 @@ public class Bird implements Runnable {
         graphics.fill(bird);
     }
 
-    //
     public synchronized void pause() {
         bird.setFrame(xPos, yPos, birdDiameter, birdDiameter);
         yVel = -yAccel*((double)updateDelay/1000);
