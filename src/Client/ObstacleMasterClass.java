@@ -26,7 +26,7 @@ public abstract class ObstacleMasterClass {
     private int backup = 400;
 
     /**
-     * Constructor used to generate fields coman to any obstacle type, including x position of the obstacle,
+     * Constructor used to generate fields common to any obstacle type, including x position of the obstacle,
      * width of obstacle, and size and position of the opening for the bird to fly through.
      * @param random The random number generator to be used for obstacle generation.
      * @param windowHeight The Height of the game window.
