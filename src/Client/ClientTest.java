@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 /**
+ * Allows testing the server by manually issuing commands through the terminal
  * Created by jebush2 on 11/8/2016.
  */
 public class ClientTest {

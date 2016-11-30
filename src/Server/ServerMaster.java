@@ -12,8 +12,12 @@ import java.net.Socket;
  */
 
 public class ServerMaster {
-    private static final int PORTNUM = 29517;
+    private static final int PORTNUM = 29517;   // Port to listen for connections on
 
+    /**
+     * Loop continuously, adding new players to the currently open game, creating new game when closed
+     * @param argv
+     */
     public static void main(String[] argv) {
         try {
             ServerSocket serverSocket = new ServerSocket(PORTNUM);
