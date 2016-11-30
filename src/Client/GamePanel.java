@@ -125,7 +125,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
     public void actionPerformed(ActionEvent e){
         time += UPDATE_DELAY;
         this.repaint();
-        if (time >= 750){
+        if (time >= 500 && !client.backlog()){
             client.updateObstaclesPassed(bird.getScore());
             playerScoreList = client.getObstaclesPassed();
             leaderList = getLeaderList(playerNameList.clone(),playerScoreList.clone());
