@@ -40,6 +40,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
     /**
      * Sorts game LeaderBoard by score count
+     * @param playerNameList contains array with name of players
+     * @param ScoreList contains array with with scores
+     * @return leaders, array containing players in order of place
      */
     private String[][] getLeaderList(String[] playerNameList, int[] ScoreList){
         int length;
@@ -65,6 +68,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
     /**
      * Starts new GamePanel per player. Game starts when 2 or more players have joined
+     * @param name name of player
+     * @param frame new JFrame
      */
     public GamePanel(String name, JFrame frame){
         this.frame = frame;
@@ -114,7 +119,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
     }
 
     /**
-     * Updates score and time
+     * Updates score and time after action performed
      */
     @Override
     public void actionPerformed(ActionEvent e){
@@ -161,6 +166,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
     /**
      * Formats time it takes player to reach end
+     * @param time current time
      */
     private String formatTime(int time){
         int minutes = (time/10)/6000;
