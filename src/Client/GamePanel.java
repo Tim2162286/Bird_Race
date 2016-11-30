@@ -15,7 +15,7 @@ import java.util.Random;
 public class GamePanel extends JPanel implements ActionListener, KeyListener, MouseListener {
     private Random rand;
     private long startTime;
-    private int OBSTACLE_COUNT=10;
+    private int OBSTACLE_COUNT=50;
     private final int WIDTH = 1280;
     private final int HEIGHT = 720;
     private static final int UPDATE_DELAY = 17;

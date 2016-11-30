@@ -37,6 +37,11 @@ public class GameState {
         }
     }
 
+    /**
+     * Sets the finish time for a particular player
+     * @param playerNum Number of the player to set the finish time of
+     * @param time The completion time in milliseconds
+     */
     public synchronized  void setFinishTime(int playerNum, long time) {
         try {
             this.finishTimes[playerNum] = time;
@@ -77,6 +82,11 @@ public class GameState {
         }
     }
 
+    /**
+     * Get the amount of time it took for the player to finish
+     * @param playerNum The player's index in join order
+     * @return Amount of time it took to finish in ms, 0 if not finished
+     */
     public long getTime(int playerNum) {
         try {
             return this.finishTimes[playerNum];

@@ -26,6 +26,11 @@ public class ServerGame implements Runnable {
         this.players = new ArrayList<ServerPlayer>(MAX_PLAYERS);
     }
 
+    /**
+     * Add a ServerPlayer to this game on the server
+     * @param player ServerPlayer to add to the ServerGame
+     * @return true if the player was able to be added to the game
+     */
     public boolean addPlayer(ServerPlayer player) {
         if (this.players.size() < MAX_PLAYERS && this.open) {  // Not full and open
             this.players.add(player);
