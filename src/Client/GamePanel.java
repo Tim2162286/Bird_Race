@@ -2,7 +2,7 @@ package Client;
 
 /**
  * Handles all client server communication, creates and updates game window.
- * @author Tim, Celso, Jon
+ * @author Tim Cuprak, Celso Mundo, Jonathan Bush
  * @since 10/28/2016.
  */
 import javax.swing.*;

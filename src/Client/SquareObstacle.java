@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * SquareObstacle is derived from ObstacleMasterClass, and  creates an obstacle consisting of 2
  * rectangles aligned vertically, separated by the opening.
- * @author Tim
+ * @author Tim Cuprak
  * @since 11/6/2016.
  */
 public class SquareObstacle extends ObstacleMasterClass {

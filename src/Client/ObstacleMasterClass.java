@@ -7,7 +7,7 @@ import java.util.Random;
  * ObstacleMasterClass is an abstract class used as a base for creating obstacles of various types.
  * Additionally contains code for generating the common fields used by all obstacle types.
  *
- * @author Tim
+ * @author Tim Cuprak
  * @since 10/24/2016.
  */
 public abstract class ObstacleMasterClass {
