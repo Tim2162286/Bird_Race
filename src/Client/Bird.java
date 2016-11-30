@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.File;
 import javax.imageio.ImageIO;
-
 
 /**
  * Created by Tim on 11/4/2016.
@@ -58,15 +56,11 @@ public class Bird implements Runnable {
 
     public void flap(){yVel -= 320;}
 
-    public void setScore(int Score){
-        score = Score;
-    }
     public int getScore(){
         return score;
     }
 
     public boolean update(){
-        //crashed = false;
         boolean remove = false;
         yPos += yVel * ((double) updateDelay / 1000.);
         yVel += yAccel * ((double) updateDelay / 1000.);
@@ -81,7 +75,6 @@ public class Bird implements Runnable {
             if (score+obstacleList.size()<GAME_LENGTH)
                 obstacleList.add(new SquareObstacle(rand,height,bottomHeight,updateDelay));
             if (obstacleList.size() == 0){}
-            //End game
         }
         synchronized (this) {
             if (yPos < 0) {
@@ -106,24 +99,14 @@ public class Bird implements Runnable {
         for (short i = 0; i < obstacleList.size(); i++) {
             obstacleList.get(i).paint(graphics);
         }
-        /*for (ObstacleMasterClass i:obstacleList){
-            i.paint(graphics);
-        }*/
         birdImageTP = new TexturePaint(birdImage,new Rectangle(xPos,(int)yPos,60,60));
         graphics.setPaint(birdImageTP);
-        //graphics.setPaint((Color.red));
         graphics.fill(bird);
     }
 
-    //If bird has crashed then there is a slight pause before restarting
+    //
     public synchronized void pause() {
         bird.setFrame(xPos, yPos, birdDiameter, birdDiameter);
-        long current = System.currentTimeMillis();
-        //while(System.currentTimeMillis() < current + 3000){
-        //    try {
-        //        Thread.sleep(50);
-        //    } catch (InterruptedException e) { }
-        //}
         yVel = -yAccel*((double)updateDelay/1000);
         if (yPos<=0 || yPos>=height-bottomHeight-birdDiameter)
             yPos = 240;
@@ -142,7 +125,6 @@ public class Bird implements Runnable {
                     crashed = true;
                     int backup = width - obstacleList.get(0).getXPos();
                     for (ObstacleMasterClass i : obstacleList) {
-                        //i.reset();
                         i.moveObstacleBack(backup);
                     }
                     obstacleList.get(0).moveLastXPosBack(backup);

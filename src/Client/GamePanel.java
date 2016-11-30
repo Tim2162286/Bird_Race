@@ -36,7 +36,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
     private double scale;
     private JFrame frame;
 
-    //Sorts game leaderboard by score count
+    /**
+     * Sorts game LeaderBoard by score count
+     */
     private String[][] getLeaderList(String[] playerNameList, int[] ScoreList){
         int length;
         int max;
@@ -59,7 +61,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
         return leaders;
     }
 
-    //Starts new GamePanel per player. Game starts when 2 or more players have joined
+    /**
+     * Starts new GamePanel per player. Game starts when 2 or more players have joined
+     */
     public GamePanel(String name, JFrame frame){
         this.frame = frame;
         this.scale = 1.;
@@ -107,7 +111,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
         (new Thread(bird)).start();
     }
 
-    //Updates score and time
+    /**
+     * Updates score and time
+     */
     @Override
     public void actionPerformed(ActionEvent e){
         time += UPDATE_DELAY;
@@ -129,7 +135,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
         }
     }
 
-    //Spacebar makes bird flap after release
+    /**
+     * SpaceBar makes bird flap after release.
+     * Does not flap if bird has crashed
+     */
     @Override
     public void keyReleased(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_SPACE && (!bird.crashed()))
@@ -148,7 +157,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
     }
 
-    //Formats time it takes player to reach end
+    /**
+     * Formats time it takes player to reach end
+     */
     private String formatTime(int time){
         int minutes = (time/10)/6000;
         int seconds = ((time/10)%6000)/100;
@@ -159,12 +170,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
         return (mm+":"+ss+"."+dd);
     }
 
-    //GUI and Painting
+    /**
+     * GUI: repainted as objects move
+     */
     @Override
     public void paintComponent(Graphics g){
         Graphics2D g2 = (Graphics2D)g;
 
-        //Rescales game depending on window size
         Rectangle r = frame.getBounds();
         int h = r.height;
         int w = r.width;
@@ -178,7 +190,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
         }
         g2.scale(this.scale, this.scale);
 
-        //Basic Background
         super.paintComponent(g);
 
         //Sky
@@ -263,31 +274,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
     }
 
-    //Does nothing
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    //Bird flaps when mouse is clicked
+    /**
+     * Bird flaps when mouse clicked
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         bird.flap();
     }
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
-    //Does nothing
+    }
     @Override
     public void mouseReleased(MouseEvent e) {
 
     }
-
-    //Does nothing
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
-
-    //Does nothing
     @Override
     public void mouseExited(MouseEvent e) {
 
