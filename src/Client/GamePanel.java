@@ -1,7 +1,9 @@
 package Client;
 
 /**
- * Created by jon on 10/28/2016.
+ * Handles all client server communication, creates and updates game window.
+ * @author Tim, Celso, Jon
+ * @since 10/28/2016.
  */
 import javax.swing.*;
 import java.awt.*;
