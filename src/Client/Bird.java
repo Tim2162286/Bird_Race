@@ -33,6 +33,12 @@ public class Bird implements Runnable {
 
     /**
      * Creates object type Bird and obstacles
+     * @param rand random to randomize obstacles
+     * @param width width of frame
+     * @param height height of frame
+     * @param bottomHeight height of ground
+     * @param updateDelay delay update is 17
+     * @param maxObsticals Max number of obstacles
      */
     public Bird(Random rand, int width, int height, int bottomHeight, int updateDelay, int maxObsticals){
         this.rand = rand;
