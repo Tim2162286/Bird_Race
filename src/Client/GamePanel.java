@@ -119,7 +119,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
     }
 
     /**
-     * Updates score and time
+     * Updates score and time after action performed
      */
     @Override
     public void actionPerformed(ActionEvent e){
